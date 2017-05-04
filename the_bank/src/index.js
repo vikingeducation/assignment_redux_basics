@@ -46,13 +46,13 @@ store.dispatch(
   })
 );
 
-store.dispatch(
-  transfer({
-    from: 2,
-    to: 1,
-    amount: 5000
-  })
-);
+// store.dispatch(
+//   transfer({
+//     from: 2,
+//     to: 1,
+//     amount: 5000
+//   })
+// );
 
 unsubscribe();
 

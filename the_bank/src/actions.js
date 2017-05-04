@@ -6,6 +6,7 @@ export const SELECT = "SELECT";
 
 let transactionId = 1;
 export function deposit(data) {
+  console.log("in action", data)
   return {
     type: DEPOSIT,
     data: {

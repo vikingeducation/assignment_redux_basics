@@ -47,10 +47,7 @@ export function bankTransactions(state = newState, action) {
             to: action.data.accountId
           }
         ],
-        selectedUser: {
-          ...selectedUser,
-          selectedUser.amount
-        }
+        selectedUser: updateSelectedUser(state.selectedUser, action)
       };
     case WITHDRAW:
       return {
@@ -73,7 +70,8 @@ export function bankTransactions(state = newState, action) {
             from: action.data.accountId,
             to: null
           }
-        ]
+        ],
+        selectedUser: updateSelectedUser(state.selectedUser, action)
       };
     case TRANSFER:
       return {
@@ -107,5 +105,24 @@ export function bankTransactions(state = newState, action) {
 
     default:
       return state;
+  }
+}
+
+
+function updateSelectedUser(selectedUser, action) {
+  if (!selectedUser.id) {return selectedUser;}
+  switch (action.type) {
+    case DEPOSIT:
+      return {
+        ...selectedUser,
+        amount: selectedUser.id === action.data.accountId ? selectedUser.amount + action.data.amount : selectedUser.amount
+      }
+    case WITHDRAW:
+      return {
+        ...selectedUser,
+        amount: selectedUser.id === action.data.accountId ? selectedUser.amount - action.data.amount : selectedUser.amount
+      }
+    case TRANSFER:
+      if (selectedUser.id) 
   }
 }
