@@ -5,7 +5,7 @@ import {
   SET_CATEGORIES_FILTER,
   SORT_ITEMS
 } from "./actions";
-import { combineReducers } from "redux";
+import {combineReducers} from "redux";
 
 function groceriesList(state = [], action) {
   switch (action.type) {
@@ -44,8 +44,18 @@ function groceryCategoriesFilter(state = "SHOW_ALL", action) {
   }
 }
 
+function itemsSort(state = "NO_SORT", action) {
+  switch (action.type) {
+    case SORT_ITEMS:
+      return action.data;
+    default:
+      return state;
+  }
+}
+
 export const groceriesApp = combineReducers({
   groceriesList,
   groceryPurchaseFilters,
-  groceryCategoriesFilter
+  groceryCategoriesFilter,
+  itemsSort
 });

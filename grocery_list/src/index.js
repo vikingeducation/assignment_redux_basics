@@ -3,13 +3,14 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
 
-import { createStore } from "redux";
-import { groceriesApp } from "./reducers";
+import {createStore} from "redux";
+import {groceriesApp} from "./reducers";
 import {
   addItem,
   purchaseItem,
   setPurchasedFilter,
-  setCategoriesFilter
+  setCategoriesFilter,
+  sortItems
 } from "./actions";
 
 let store = createStore(groceriesApp);
@@ -35,6 +36,8 @@ store.dispatch(purchaseItem(1));
 store.dispatch(setPurchasedFilter("SHOW_PURCHASED"));
 
 store.dispatch(setCategoriesFilter("SHOW_CONDIMENTS"));
+
+store.dispatch(sortItems("SORT_BY_NAME"));
 
 //stay down here
 ReactDOM.render(<App />, document.getElementById("root"));
