@@ -1,5 +1,28 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
+
+
+ state: {
+ 	accounts: [
+ 		{
+ 			id: 1,
+ 			amount: 1000
+ 		}
+ 	],
+ 	transactions: [
+ 		{
+ 			id: 1,
+ 			date: 11/11/11
+ 			amount: 20,
+ 			type: "withdraw",
+ 			from: 2,
+ 			to: null
+ 		}
+ 	]
+ }
+
+
+
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
@@ -1516,17 +1539,17 @@ When you build the project, Create React App will place the `public` folder cont
 2. Install `serve` by running `npm install --save serve`.
 
 3. Add this line to `scripts` in `package.json`:
-    
+
     ```
     "now-start": "serve build/",
     ```
-    
+
 4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
-    
+
     ```
     > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
     ```
-    
+
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
 Details are available in [this article.](https://zeit.co/blog/now-static)
