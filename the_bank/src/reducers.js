@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { DEPOSIT } from "./actions";
+import { DEPOSIT, WITHDRAW, TRANSFER } from "./actions";
 
 let accounts = [
   {
@@ -17,7 +17,7 @@ let accounts = [
   }
 ];
 
-function bankTransactions(
+export function bankTransactions(
   state = { accounts: accounts, transactions: [] },
   action
 ) {
@@ -26,14 +26,84 @@ function bankTransactions(
       return {
         accounts: state.accounts.map(account => {
           if (account.id === action.data.accountId) {
-            account.ammount += action.data.ammount;
-            return account;
+            return {
+              id: account.id,
+              amount: account.amount + action.data.amount
+            };
           }
           return account;
         }),
-        transactions: [...state.transactions, action.data]
+        transactions: [
+          ...state.transactions, 
+          {
+            id: action.data.transactionId,
+            date: Date.now(),
+            amount: action.data.amount,
+            type: "deposit",
+            from: null,
+            to: action.data.accountId
+          }
+        ]
+      };
+    case WITHDRAW:
+      return {
+        accounts: state.accounts.map(account => {
+          if (account.id === action.data.accountId) {
+            return {
+              id: account.id,
+              amount: account.amount - action.data.amount
+            };
+          }
+          return account;
+        }),
+        transactions: [
+          ...state.transactions, 
+          {
+            id: action.data.transactionId,
+            date: Date.now(),
+            amount: action.data.amount,
+            type: "withdraw",
+            from: action.data.accountId,
+            to: null
+          }
+        ]
+      };
+    case TRANSFER:
+      return {
+        accounts: state.accounts.map(account => {
+          if (account.id === action.data.from) {
+            return {
+              id: account.id,
+              amount: account.amount - action.data.amount
+            };
+          }
+          if (account.id === action.data.to) {
+            return {
+              id: account.id,
+              amount: account.amount + action.data.amount
+            };
+          }
+          return account;
+        }),
+        transactions: [
+          ...state.transactions, 
+          {
+            id: action.data.transactionId,
+            date: Date.now(),
+            amount: action.data.amount,
+            type: "transfer",
+            from: action.data.from,
+            to: action.data.to
+          }
+        ]
       };
 
     default:
+      return state;
   }
 }
+
+
+
+
+

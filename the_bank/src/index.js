@@ -5,31 +5,54 @@ import "./index.css";
 
 import { createStore } from "redux";
 
+import { bankTransactions } from "./reducers";
+
+import { deposit, withdraw, transfer } from "./actions";
+
+let store = createStore(bankTransactions);
+
 let unsubscribe = store.subscribe(() => {
   // Log the new state to the console
-  console.log(store.getState());
+  console.log("new state", store.getState());
 });
 
 console.log("initial state", store.getState());
 
-// state: {
-// 	accounts: [
-// 		{
-// 			id: 1,
-// 			amount: 1000
-// 		}
-// 	],
-// 	transactions: [
-// 		{
-// 			id: 1,
-// 			date: 11/11/11
-// 			amount: 20,
-// 			type: "withdraw",
-// 			from: 2,
-// 			to: null
-// 		}
-// 	]
-// }
+const viewAccount = (accountId) => {
+	let account = store.getState().accounts.filter((account) => {
+		return account.id = accountId
+	})
+	console.log(account);
+}
+
+store.dispatch(
+  deposit({
+    accountId: 2,
+    amount: 27
+  })
+);
+
+store.dispatch(
+  withdraw({
+    accountId: 1,
+    amount: 500
+  })
+);
+
+store.dispatch(
+  deposit({
+    accountId: 2,
+    amount: 100
+  })
+);
+
+store.dispatch(
+  transfer({
+    from: 2,
+    to: 1,
+    amount: 5000
+  })
+);
 
 unsubscribe();
 
