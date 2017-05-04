@@ -14,3 +14,31 @@ export function addItem(data) {
     }
   };
 }
+
+export function purchaseItem(id) {
+  return {
+    type: PURCHASE_ITEM,
+    data: id
+  };
+}
+
+export function setPurchasedFilter(data) {
+  return {
+    type: SET_PURCHASED_FILTER,
+    data
+  };
+}
+
+export function setCategoriesFilter(data) {
+  return {
+    type: SET_CATEGORIES_FILTER,
+    data
+  };
+}
+
+export function sortItems(data) {
+  return {
+    type: SORT_ITEMS,
+    data
+  };
+}
