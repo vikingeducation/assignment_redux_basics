@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { DEPOSIT, WITHDRAW, TRANSFER } from "./actions";
+import { DEPOSIT, WITHDRAW, TRANSFER, SELECT, FILTER } from "./actions";
 
 let accounts = [
   {
@@ -20,7 +20,8 @@ let accounts = [
 const newState = {
   accounts: accounts,
   transactions: [],
-  selectedUser: {}
+  selectedUser: {},
+  filteredTransactions: {}
 };
 
 export function bankTransactions(state = newState, action) {
@@ -47,7 +48,8 @@ export function bankTransactions(state = newState, action) {
             to: action.data.accountId
           }
         ],
-        selectedUser: updateSelectedUser(state.selectedUser, action)
+        selectedUser: updateSelectedUser(state.selectedUser, action),
+        filteredTransactions: state.filteredTransactions
       };
     case WITHDRAW:
       return {
@@ -71,7 +73,8 @@ export function bankTransactions(state = newState, action) {
             to: null
           }
         ],
-        selectedUser: updateSelectedUser(state.selectedUser, action)
+        selectedUser: updateSelectedUser(state.selectedUser, action),
+        filteredTransactions: state.filteredTransactions
       };
     case TRANSFER:
       return {
@@ -100,7 +103,31 @@ export function bankTransactions(state = newState, action) {
             from: action.data.from,
             to: action.data.to
           }
-        ]
+        ],
+        selectedUser: updateSelectedUser(state.selectedUser, action),
+        filteredTransactions: state.filteredTransactions
+      };
+    case SELECT:
+      return {
+        accounts: state.accounts,
+        transactions: state.transactions,
+        selectedUser: state.accounts.find(account => {
+          return account.id === action.data;
+        }),
+        filteredTransactions: state.filteredTransactions
+      };
+
+    case FILTER:
+      return {
+        accounts: state.accounts,
+        transactions: state.transactions,
+        selectedUser: state.selectedUser,
+        filteredTransactions: state.transactions.filter(transaction => {
+          return (
+            (!action.data.start || transaction.date > action.data.start) &&
+            (!action.data.end || transaction.date < action.data.end)
+          );
+        })
       };
 
     default:
@@ -108,21 +135,40 @@ export function bankTransactions(state = newState, action) {
   }
 }
 
-
 function updateSelectedUser(selectedUser, action) {
-  if (!selectedUser.id) {return selectedUser;}
+  if (!selectedUser.id) {
+    return selectedUser;
+  }
   switch (action.type) {
     case DEPOSIT:
       return {
         ...selectedUser,
-        amount: selectedUser.id === action.data.accountId ? selectedUser.amount + action.data.amount : selectedUser.amount
-      }
+        amount: selectedUser.id === action.data.accountId
+          ? selectedUser.amount + action.data.amount
+          : selectedUser.amount
+      };
     case WITHDRAW:
       return {
         ...selectedUser,
-        amount: selectedUser.id === action.data.accountId ? selectedUser.amount - action.data.amount : selectedUser.amount
-      }
+        amount: selectedUser.id === action.data.accountId
+          ? selectedUser.amount - action.data.amount
+          : selectedUser.amount
+      };
     case TRANSFER:
-      if (selectedUser.id) 
+      if (selectedUser.id === action.data.to) {
+        return {
+          ...selectedUser,
+          amount: selectedUser.amount + action.data.amount
+        };
+      } else if (selectedUser.id === action.data.from) {
+        return {
+          ...selectedUser,
+          amount: selectedUser.amount - action.data.amount
+        };
+      } else {
+        return {
+          ...selectedUser
+        };
+      }
   }
 }

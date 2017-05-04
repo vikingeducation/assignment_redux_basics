@@ -7,7 +7,7 @@ import { createStore } from "redux";
 
 import { bankTransactions } from "./reducers";
 
-import { deposit, withdraw, transfer } from "./actions";
+import { deposit, withdraw, transfer, select, filterTrans } from "./actions";
 
 let store = createStore(bankTransactions);
 
@@ -18,12 +18,14 @@ let unsubscribe = store.subscribe(() => {
 
 console.log("initial state", store.getState());
 
-const viewAccount = (accountId) => {
-	let account = store.getState().accounts.filter((account) => {
-		return account.id = accountId
-	})
-	console.log(account);
-}
+const viewAccount = accountId => {
+  let account = store.getState().accounts.filter(account => {
+    return (account.id = accountId);
+  });
+  console.log(account);
+};
+
+store.dispatch(select(1));
 
 store.dispatch(
   deposit({
@@ -46,13 +48,27 @@ store.dispatch(
   })
 );
 
-// store.dispatch(
-//   transfer({
-//     from: 2,
-//     to: 1,
-//     amount: 5000
-//   })
-// );
+store.dispatch(
+  transfer({
+    from: 2,
+    to: 1,
+    amount: 5000
+  })
+);
+
+store.dispatch(
+  filterTrans({
+    start: null,
+    end: null
+  })
+);
+
+store.dispatch(
+  filterTrans({
+    start: 1,
+    end: 2
+  })
+);
 
 unsubscribe();
 

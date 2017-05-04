@@ -11,6 +11,11 @@ submit
 
 
  state: {
+   filteredTransactions:{
+     start,
+     end,
+     transactions:[]
+     },
    selectedUser: {account},
  	accounts: [
  		{
