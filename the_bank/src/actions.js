@@ -22,32 +22,13 @@ export function depositMoney(data) {
   };
 }
 
-// export function withdrawlMoney(data) {
-//   return {
-//     type: WITHDRAWL_MONEY,
-//     data: {
-//       ...data,
-//       targetAccount: null,
-//       method: "credit",
-//       date: date++
-//     }
-//   };
-// }
-
-// export function transferMoney(data) {
-//   return {
-//     type: TRANSFER_MONEY,
-//     data: {
-//       ...data,
-//       method: "credit",
-//       date: date++
-//     }
-//   };
-// }
-
-// export function setDateFilter(data) {
-//   return {
-//     type: SET_DATE_FILTER,
-//     data
-//   };
-// }
+export function withdrawlMoney(data) {
+  return {
+    type: WITHDRAWL_MONEY,
+    data: {
+      ...data,
+      method: "credit",
+      date: new Date()
+    }
+  };
+}

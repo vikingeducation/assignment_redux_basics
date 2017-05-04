@@ -5,29 +5,25 @@ import {
   TRANSFER_MONEY,
   SET_DATE_FILTER
 } from "./actions";
-import { combineReducers } from "redux";
+import {combineReducers} from "redux";
 
 const initialState = {
   accounts: [
-    { id: 1, balance: 100, transactions: [] },
-    { id: 2, balance: 200, transactions: [] }
+    {id: 1, balance: 100, transactions: []},
+    {id: 2, balance: 200, transactions: []}
   ],
   selectedAccountId: 0
 };
 
-function accountSelection(state = initialState.selectedAccountId, action) {
-  switch (action.type) {
-    case SELECT_ACCOUNT:
-      return action.data;
-    default:
-      return state;
-  }
-}
-
 function updateBalance(state = initialState, action) {
   switch (action.type) {
+    case SELECT_ACCOUNT:
+      return {
+        ...state,
+        selectedAccountId: action.data
+      };
     case DEPOSIT_MONEY:
-      return state.accounts.map(account => {
+      let newDepositArray = state.accounts.map(account => {
         if (account.id === state.selectedAccountId) {
           let newDeposit = {
             amount: action.data.amount,
@@ -37,72 +33,50 @@ function updateBalance(state = initialState, action) {
             from: null
           };
           let newBalance = account.balance + action.data.amount;
-
           return {
             id: state.selectedAccountId,
             balance: newBalance,
-            transactions: [...action.transactions, newDeposit]
+            transactions: [...account.transactions, newDeposit]
           };
         }
         return account;
       });
-    // case WITHDRAWL_MONEY:
-    //   let newWithdrawl = {
-    //     method: action.data.method,
-    //     date: action.data.date,
-    //     targetAccount: action.data.targetAccount
-    //   };
-    //   newWithdrawl.prevBalance = state[state.length - 1].balance;
-    //   newWithdrawl.balance = state[state.length - 1].balance -
-    //     action.data.amount;
-    //   newWithdrawl.amount = action.data.amount;
-    //   return [...state, newWithdrawl];
+      return {
+        ...state,
+        accounts: newDepositArray
+      };
 
-    // case TRANSFER_MONEY:
-    //   let newTransfer = {
-    //     method: action.data.method,
-    //     date: action.data.date,
-    //     targetAccount: action.data.targetAccount
-    //   };
-    //   newTransfer.prevBalance = state[state.length - 1].balance;
-    //   newTransfer.balance = state[state.length - 1].balance -
-    //     action.data.amount;
-    //   newTransfer.amount = action.data.amount;
-    //   return [...state, newTransfer];
+    case WITHDRAWL_MONEY:
+      let newWithdrawlArray = state.accounts.map(account => {
+        if (
+          account.id === state.selectedAccountId &&
+          account.balance > action.data.amount
+        ) {
+          let newWithdrawl = {
+            amount: action.data.amount,
+            method: action.data.method,
+            date: action.data.date,
+            to: null,
+            from: account.id
+          };
+          let newBalance = account.balance - action.data.amount;
 
+          return {
+            id: state.selectedAccountId,
+            balance: newBalance,
+            transactions: [...account.transactions, newWithdrawl]
+          };
+        }
+        return account;
+      });
+      return {
+        ...state,
+        accounts: newWithdrawlArray
+      };
 
     default:
       return state;
   }
 }
-// function filterTransactions(state = "SHOW_ALL", action) {
-//   switch (action.type) {
-//     case SET_DATE_FILTER:
-//       return action.data;
-//     default:
-//       return state;
-//   }
-// }
 
-export const transactionsApp = combineReducers({
-  accountSelection,
-  updateBalance
-});
-
-//
-//
-// {
-//   prevBalance: state[state.length].balance
-//   balance: state[state.length].balance+data.amount
-//   transactionAmount: data.amount
-// }
-//
-//
-// {
-//   prevBalance: state[state.length].balance
-//   balance: state[state.length].balance+data.amount
-//   transactionAmount: data.amount
-//   method: "debit",
-//   date: date++
-// }
-//
+export default updateBalance;
