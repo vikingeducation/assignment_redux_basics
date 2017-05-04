@@ -3,9 +3,10 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
 
-import {createStore} from "redux";
-import {transactionsApp} from "./reducers";
+import { createStore } from "redux";
+import { transactionsApp } from "./reducers";
 import {
+  selectAccount,
   depositMoney,
   withdrawlMoney,
   transferMoney,
@@ -20,25 +21,27 @@ let unsubscribe = store.subscribe(() => {
 
 console.log("init state", store.getState());
 
+store.dispatch(selectAccount(1));
+
 store.dispatch(
   depositMoney({
     amount: 55
   })
 );
 
-store.dispatch(
-  withdrawlMoney({
-    amount: 90000
-  })
-);
+// store.dispatch(
+//   withdrawlMoney({
+//     amount: 90000
+//   })
+// );
 
-store.dispatch(
-  transferMoney({
-    amount: 7000,
-    targetAccount: 39723674792346723
-  })
-);
+// store.dispatch(
+//   transferMoney({
+//     amount: 7000,
+//     targetAccount: 39723674792346723
+//   })
+// );
 
-store.dispatch(setDateFilter("1111111110:1111111112"));
+// store.dispatch(setDateFilter("1111111110:1111111112"));
 
 ReactDOM.render(<App />, document.getElementById("root"));
