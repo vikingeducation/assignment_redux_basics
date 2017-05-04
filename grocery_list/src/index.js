@@ -8,12 +8,12 @@ import { createStore } from "redux";
 
 import { groceryApp } from "./reducers";
 
-import { addItem } from "./actions";
+import { addItem, purchaseItem, setPurchasedFilter, setCategoryFilter, setSortBy } from "./actions";
 
 let store = createStore(groceryApp);
 
 let unsubscribe = store.subscribe(() => {
-  console.log(store.getState());
+  console.log("new state: ", store.getState());
 });
 
 // Before we start, take a look at the state
@@ -27,6 +27,24 @@ store.dispatch(
     category: "dairey"
   })
 );
+
+store.dispatch(
+  addItem({
+    name: "chocolate",
+    description: "beautiful but not parmesan",
+    amount: 3,
+    category: "sweets"
+  })
+);
+
+store.dispatch(purchaseItem(1));
+
+store.dispatch(setPurchasedFilter('SHOW_PURCHASED'));
+
+store.dispatch(setCategoryFilter('SHOW_SWEETS'));
+
+store.dispatch(setSortBy('DESCRIPTION'));
+
 
 unsubscribe();
 ////////////////////////////////
