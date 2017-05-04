@@ -2,6 +2,7 @@
 export const DEPOSIT = "DEPOSIT";
 export const WITHDRAW = "WITHDRAW";
 export const TRANSFER = "TRANSFER";
+export const SELECT = "SELECT";
 
 let transactionId = 1;
 export function deposit(data) {
@@ -31,5 +32,12 @@ export function transfer(data) {
       ...data,
       transactionId: transactionId++
     }
+  };
+}
+
+export function selecteUser(id) {
+  return {
+    type: SELECT,
+    data: id
   };
 }

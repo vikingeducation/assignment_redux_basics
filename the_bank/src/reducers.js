@@ -17,10 +17,13 @@ let accounts = [
   }
 ];
 
-export function bankTransactions(
-  state = { accounts: accounts, transactions: [] },
-  action
-) {
+const newState = {
+  accounts: accounts,
+  transactions: [],
+  selectedUser: {}
+};
+
+export function bankTransactions(state = newState, action) {
   switch (action.type) {
     case DEPOSIT:
       return {
@@ -34,7 +37,7 @@ export function bankTransactions(
           return account;
         }),
         transactions: [
-          ...state.transactions, 
+          ...state.transactions,
           {
             id: action.data.transactionId,
             date: Date.now(),
@@ -43,7 +46,11 @@ export function bankTransactions(
             from: null,
             to: action.data.accountId
           }
-        ]
+        ],
+        selectedUser: {
+          ...selectedUser,
+          selectedUser.amount
+        }
       };
     case WITHDRAW:
       return {
@@ -57,7 +64,7 @@ export function bankTransactions(
           return account;
         }),
         transactions: [
-          ...state.transactions, 
+          ...state.transactions,
           {
             id: action.data.transactionId,
             date: Date.now(),
@@ -86,7 +93,7 @@ export function bankTransactions(
           return account;
         }),
         transactions: [
-          ...state.transactions, 
+          ...state.transactions,
           {
             id: action.data.transactionId,
             date: Date.now(),
@@ -102,8 +109,3 @@ export function bankTransactions(
       return state;
   }
 }
-
-
-
-
-
