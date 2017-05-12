@@ -1,34 +1,51 @@
-export const SELECT_ACCOUNT = "SELECT_ACCOUNT";
-export const DEPOSIT_MONEY = "DEPOSIT_MONEY";
-export const WITHDRAWL_MONEY = "WITHDRAWL_MONEY";
-export const TRANSFER_MONEY = "TRANSFER_MONEY";
-export const SET_DATE_FILTER = "SET_DATE_FILTER";
+export const DEPOSIT = "DEPOSIT";
+export const WITHDRAW = "WITHDRAW";
+export const TRANSFER = "TRANSFER";
+export const SELECT = "SELECT";
+export const FILTER = "FILTER";
 
-export function selectAccount(data) {
-  return {
-    type: SELECT_ACCOUNT,
-    data: data
-  };
-}
+let transactionId = 1;
 
-export function depositMoney(data) {
+export function deposit(data) {
   return {
-    type: DEPOSIT_MONEY,
+    type: DEPOSIT,
     data: {
       ...data,
-      method: "debit",
-      date: new Date()
+      transactionId: transactionId++
     }
   };
 }
 
-export function withdrawlMoney(data) {
+export function withdraw(data) {
   return {
-    type: WITHDRAWL_MONEY,
+    type: WITHDRAW,
     data: {
       ...data,
-      method: "credit",
-      date: new Date()
+      transactionId: transactionId++
     }
+  };
+}
+
+export function transfer(data) {
+  return {
+    type: TRANSFER,
+    data: {
+      ...data,
+      transactionId: transactionId++
+    }
+  };
+}
+
+export function select(id) {
+  return {
+    type: SELECT,
+    data: id
+  };
+}
+
+export function filterTrans(data) {
+  return {
+    type: FILTER,
+    data
   };
 }

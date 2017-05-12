@@ -2,12 +2,12 @@ import {
   ADD_ITEM,
   PURCHASE_ITEM,
   SET_PURCHASED_FILTER,
-  SET_CATEGORIES_FILTER,
-  SORT_ITEMS
+  SET_CATEGORY_FILTER,
+  SET_SORT_BY
 } from "./actions";
-import {combineReducers} from "redux";
+import { combineReducers } from "redux";
 
-function groceriesList(state = [], action) {
+function items(state = [], action) {
   switch (action.type) {
     case ADD_ITEM:
       return [...state, action.data];
@@ -19,13 +19,14 @@ function groceriesList(state = [], action) {
             purchased: true
           };
         }
+        return item;
       });
     default:
       return state;
   }
 }
 
-function groceryPurchaseFilters(state = "SHOW_ALL", action) {
+function purchasedFilter(state = "SHOW_ALL", action) {
   switch (action.type) {
     case SET_PURCHASED_FILTER:
       return action.data;
@@ -35,27 +36,27 @@ function groceryPurchaseFilters(state = "SHOW_ALL", action) {
   }
 }
 
-function groceryCategoriesFilter(state = "SHOW_ALL", action) {
+function categoryFilter(state = "SHOW_ALL", action) {
   switch (action.type) {
-    case SET_CATEGORIES_FILTER:
+    case SET_CATEGORY_FILTER:
       return action.data;
     default:
       return state;
   }
 }
 
-function itemsSort(state = "NO_SORT", action) {
+function sortBy(state = "NAME", action) {
   switch (action.type) {
-    case SORT_ITEMS:
+    case SET_SORT_BY:
       return action.data;
     default:
       return state;
   }
 }
 
-export const groceriesApp = combineReducers({
-  groceriesList,
-  groceryPurchaseFilters,
-  groceryCategoriesFilter,
-  itemsSort
+export const groceryApp = combineReducers({
+  items,
+  purchasedFilter,
+  categoryFilter,
+  sortBy
 });

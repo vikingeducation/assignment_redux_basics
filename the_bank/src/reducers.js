@@ -1,77 +1,132 @@
-import {
-  SELECT_ACCOUNT,
-  DEPOSIT_MONEY,
-  WITHDRAWL_MONEY,
-  TRANSFER_MONEY,
-  SET_DATE_FILTER
-} from "./actions";
-import {combineReducers} from "redux";
+import { DEPOSIT, WITHDRAW, TRANSFER, SELECT, FILTER } from "./actions";
 
-const initialState = {
-  accounts: [
-    {id: 1, balance: 100, transactions: []},
-    {id: 2, balance: 200, transactions: []}
-  ],
-  selectedAccountId: 0
+let accounts = [
+  {
+    id: 1,
+    amount: 1000
+  },
+  {
+    id: 2,
+    amount: 10000
+  },
+  {
+    id: 3,
+    amount: 10001
+  }
+];
+
+const newState = {
+  accounts,
+  transactions: [],
+  selectedUser: {},
+  filteredTransactions: {}
 };
 
-function updateBalance(state = initialState, action) {
+export function bankTransactions(state = newState, action) {
   switch (action.type) {
-    case SELECT_ACCOUNT:
+    case DEPOSIT:
       return {
-        ...state,
-        selectedAccountId: action.data
-      };
-    case DEPOSIT_MONEY:
-      let newDepositArray = state.accounts.map(account => {
-        if (account.id === state.selectedAccountId) {
-          let newDeposit = {
+        accounts: state.accounts.map(account => {
+          if (account.id === action.data.accountId) {
+            return {
+              id: account.id,
+              amount: account.amount + action.data.amount
+            };
+          }
+          return account;
+        }),
+        transactions: [
+          ...state.transactions,
+          {
+            id: action.data.transactionId,
+            date: Date.now(),
             amount: action.data.amount,
-            method: action.data.method,
-            date: action.data.date,
-            to: account.id,
-            from: null
-          };
-          let newBalance = account.balance + action.data.amount;
-          return {
-            id: state.selectedAccountId,
-            balance: newBalance,
-            transactions: [...account.transactions, newDeposit]
-          };
-        }
-        return account;
-      });
-      return {
-        ...state,
-        accounts: newDepositArray
+            type: "deposit",
+            from: null,
+            to: action.data.accountId
+          }
+        ],
+        selectedUser: updateSelectedUser(state.selectedUser, action),
+        filteredTransactions: state.filteredTransactions
       };
 
-    case WITHDRAWL_MONEY:
-      let newWithdrawlArray = state.accounts.map(account => {
-        if (
-          account.id === state.selectedAccountId &&
-          account.balance > action.data.amount
-        ) {
-          let newWithdrawl = {
+    case WITHDRAW:
+      return {
+        accounts: state.accounts.map(account => {
+          if (account.id === action.data.accountId) {
+            return {
+              id: account.id,
+              amount: account.amount - action.data.amount
+            };
+          }
+          return account;
+        }),
+        transactions: [
+          ...state.transactions,
+          {
+            id: action.data.transactionId,
+            date: Date.now(),
             amount: action.data.amount,
-            method: action.data.method,
-            date: action.data.date,
-            to: null,
-            from: account.id
-          };
-          let newBalance = account.balance - action.data.amount;
+            type: "withdraw",
+            from: action.data.accountId,
+            to: null
+          }
+        ],
+        selectedUser: updateSelectedUser(state.selectedUser, action),
+        filteredTransactions: state.filteredTransactions
+      };
 
-          return {
-            id: state.selectedAccountId,
-            balance: newBalance,
-            transactions: [...account.transactions, newWithdrawl]
-          };
-        }
-        return account;
-      });
+    case TRANSFER:
+      return {
+        accounts: state.accounts.map(account => {
+          if (account.id === action.data.from) {
+            return {
+              id: account.id,
+              amount: account.amount - action.data.amount
+            };
+          }
+          if (account.id === action.data.to) {
+            return {
+              id: account.id,
+              amount: account.amount + action.data.amount
+            };
+          }
+          return account;
+        }),
+        transactions: [
+          ...state.transactions,
+          {
+            id: action.data.transactionId,
+            date: Date.now(),
+            amount: action.data.amount,
+            type: "transfer",
+            from: action.data.from,
+            to: action.data.to
+          }
+        ],
+        selectedUser: updateSelectedUser(state.selectedUser, action),
+        filteredTransactions: state.filteredTransactions
+      };
+
+    case SELECT:
+      return {
+        accounts: state.accounts,
+        transactions: state.transactions,
+        selectedUser: state.accounts.find(account => {
+          return account.id === action.data;
+        }),
+        filteredTransactions: state.filteredTransactions
+      };
+
+    case FILTER:
       return {
         ...state,
-        accounts: newWithdrawlArray
+        filteredTransactions: state.transactions.filter(transaction => {
+          return (
+            (!action.data.start || transaction.date > action.data.start) &&
+            (!action.data.end || transaction.date < action.data.end)
+          );
+        })
       };
 
     default:
@@ -79,4 +134,47 @@ function updateBalance(state = initialState, action) {
   }
 }
 
-export default updateBalance;
+function updateSelectedUser(selectedUser, action) {
+  if (!selectedUser.id) {
+    return selectedUser;
+  }
+  switch (action.type) {
+    case DEPOSIT:
+      return {
+        ...selectedUser,
+        amount: selectedUser.id === action.data.accountId
+          ? selectedUser.amount + action.data.amount
+          : selectedUser.amount
+      };
+
+    case WITHDRAW:
+      return {
+        ...selectedUser,
+        amount: selectedUser.id === action.data.accountId
+          ? selectedUser.amount - action.data.amount
+          : selectedUser.amount
+      };
+
+    case TRANSFER:
+      if (selectedUser.id === action.data.to) {
+        return {
+          ...selectedUser,
+          amount: selectedUser.amount + action.data.amount
+        };
+      } else if (selectedUser.id === action.data.from) {
+        return {
+          ...selectedUser,
+          amount: selectedUser.amount - action.data.amount
+        };
+      } else {
+        return {
+          ...selectedUser
+        };
+      }
+    default:
+      return {
+        selectedUser
+      };
+  }
+}
+

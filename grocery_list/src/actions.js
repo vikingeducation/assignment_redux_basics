@@ -1,16 +1,17 @@
 export const ADD_ITEM = "ADD_ITEM";
 export const PURCHASE_ITEM = "PURCHASE_ITEM";
-export const SET_PURCHASED_FILTER = "SHOW_PURCHASED";
-export const SET_CATEGORIES_FILTER = "SET_CATEGORIES_FILTER";
-export const SORT_ITEMS = "SORT_ITEMS";
+export const SET_PURCHASED_FILTER = "SET_PURCHASED_FILTER";
+export const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
+export const SET_SORT_BY = "SET_SORT_BY";
 
-let nextItemId = 1;
+let itemId = 1;
 export function addItem(data) {
   return {
     type: ADD_ITEM,
     data: {
       ...data,
-      id: nextItemId++
+      id: itemId++,
+      purchased: false
     }
   };
 }
@@ -29,16 +30,16 @@ export function setPurchasedFilter(data) {
   };
 }
 
-export function setCategoriesFilter(data) {
+export function setCategoryFilter(data) {
   return {
-    type: SET_CATEGORIES_FILTER,
+    type: SET_CATEGORY_FILTER,
     data
   };
 }
 
-export function sortItems(data) {
+export function setSortBy(data) {
   return {
-    type: SORT_ITEMS,
+    type: SET_SORT_BY,
     data
   };
 }
