@@ -1,29 +1,3 @@
-/*
-
-  Need: 
-  Add a new item to my grocery list. The item should have a name/description and optional fields for amount and category.
-  Indicate an item has been purchased.
-  Set filters for purchased/not purchased/all, categories/all.
-  Set sort by name/description.
-
-  state shape:
-  {
-    sortFilter: 'SHOW_ALL',
-    categoryFilter: 'SHOW_ALL',
-    purchasedFilter: 'SHOW_ALL',
-    groceryList: [
-      {
-        id: 1,
-        name: 'Bananas',
-        description: 'It's very yellow...',
-        amount: 5,
-        category: 'produce'
-      }
-    ]
-  }
-  
-*/
-
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const SET_PURCHASED_FILTER = 'SET_PURCHASED_FILTER';

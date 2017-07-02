@@ -34,7 +34,7 @@ let defaultFilters = {
 };
 
 function productFilters(state = defaultFilters, action) {
-  switch (action.type) {
+  switch(action.type) {
     case SET_PURCHASED_FILTER:
       return {
         ...state,
@@ -44,14 +44,14 @@ function productFilters(state = defaultFilters, action) {
       return {
         ...state,
         category: action.data
-      }
+      };
     case SET_SORT_FILTER:
       return {
         ...state,
         sort: action.data
-      }
+      };
     default:
-      return state
+      return state;
   }
 }
 
