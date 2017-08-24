@@ -18,8 +18,9 @@ export default class GroceryForm extends Component {
     this.state = {
       name: "",
       description: "",
-      amount: 0,
-      category: "produce"
+      amount: 1,
+      category: "produce",
+      purchased: false
     };
   }
 
@@ -42,6 +43,7 @@ export default class GroceryForm extends Component {
         <FormGroup>
           <ControlLabel>Name</ControlLabel>
           <FormControl
+            required="true"
             type="text"
             name="name"
             value={name}
@@ -62,6 +64,7 @@ export default class GroceryForm extends Component {
         <FormGroup>
           <ControlLabel>Amount</ControlLabel>
           <FormControl
+            required="true"
             type="number"
             name="amount"
             value={amount}
@@ -72,6 +75,7 @@ export default class GroceryForm extends Component {
         <FormGroup>
           <ControlLabel>Category</ControlLabel>
           <FormControl
+            required="true"
             componentClass="select"
             name="category"
             value={category}
