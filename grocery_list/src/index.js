@@ -6,7 +6,7 @@ import registerServiceWorker from "./registerServiceWorker";
 
 import { createStore } from "redux";
 import groceryApp from "./reducers";
-import { addItem } from "./actions";
+import { addItem, purchaseItem } from "./actions";
 
 const store = createStore(groceryApp);
 
@@ -43,6 +43,12 @@ store.dispatch(
 		purchased: false
 	})
 );
+
+store.dispatch(
+	purchaseItem(2)
+)
+
+store.dispatch(setPurchasedFilter("PURCHASED"))
 
 unsubscribe();
 
