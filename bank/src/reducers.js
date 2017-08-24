@@ -50,37 +50,52 @@ const transaction = [
   }
 ];
 
-const transactionsStartFilterSchema = "SHOW_ALL"; // SHOW_{AFTER_[DATE], ALL}
+const transactionsStartFilterSchema = "ALL"; // SHOW_{AFTER_[DATE], ALL}
 
-const transactionsEndFilterSchema = "SHOW_ALL"; // SHOW_{BEFORE_[DATE], ALL}
+const transactionsEndFilterSchema = "ALL"; // SHOW_{BEFORE_[DATE], ALL}
 
-const transactionsTypeFilterSchema = "SHOW_ALL"; // SHOW_{DEPOSIT, WITHDRAWAL, TRANSFER, ALL}
+const transactionsTypeFilterSchema = "ALL"; // SHOW_{DEPOSIT, WITHDRAWAL, TRANSFER, ALL}
 
 // reducers
-function accounts(state = { accounts: [], transactions: [] }, action) {
+function bank(state = { accounts: [], transactions: [] }, action) {
+  // payload = {}
+  // let copy = Object.assign({}, state) // copy.accounts = copy.accounts.map
+
   switch (action.type) {
     case ADD_ACCOUNT:
-      return { accounts: [...state.accounts, action.data] };
+      return {
+        accounts: [...state.accounts, action.data],
+        transactions: [...state.transactions]
+      };
 
     case DEPOSIT_TO_ACCOUNT:
-      const depositAccounts = state.accounts.map(
-        account =>
-          account.id === action.data.id
-            ? { ...account, amount: account.amount + action.data.amount }
-            : account
-      );
-      const depositTransaction = {
-        type: DEPOSIT,
-        id: action.data.transactionId,
-        sourceAccountId: null,
-        destinationAccountId: action.data.id,
-        amount: action.data.amount,
-        date: action.data.date || Date.now()
-      };
-      return {
-        accounts: depositAccounts,
-        transactions: [...state.transactions, depositTransaction]
-      };
+      let doDeposit = false;
+      const depositAccounts = state.accounts.map(account => {
+        if (account.id === action.data.id) {
+          doDeposit = true;
+          return { ...account, amount: account.amount + action.data.amount };
+        } else {
+          return account;
+        }
+      });
+
+      if (doDeposit) {
+        const depositTransaction = {
+          type: DEPOSIT,
+          id: action.data.transactionId,
+          sourceAccountId: null,
+          destinationAccountId: action.data.id,
+          amount: action.data.amount,
+          date: action.data.date || Date.now()
+        };
+
+        return {
+          accounts: depositAccounts,
+          transactions: [...state.transactions, depositTransaction]
+        };
+      } else {
+        return { ...state };
+      }
 
     case WITHDRAW_FROM_ACCOUNT:
       const withdrawAccounts = state.accounts.map(
@@ -136,7 +151,7 @@ function accounts(state = { accounts: [], transactions: [] }, action) {
   }
 }
 
-function transactionEndFilter(state = "SHOW_ALL", action) {
+function transactionEndFilter(state = "ALL", action) {
   switch (action.type) {
     case SET_TRANSACTION_END_FILTER:
       return action.data;
@@ -146,7 +161,7 @@ function transactionEndFilter(state = "SHOW_ALL", action) {
   }
 }
 
-function transactionStartFilter(state = "SHOW_ALL", action) {
+function transactionStartFilter(state = "ALL", action) {
   switch (action.type) {
     case SET_TRANSACTION_START_FILTER:
       return action.data;
@@ -156,7 +171,7 @@ function transactionStartFilter(state = "SHOW_ALL", action) {
   }
 }
 
-function transactionTypeFilter(state = "SHOW_ALL", action) {
+function transactionTypeFilter(state = "ALL", action) {
   switch (action.type) {
     case SET_TRANSACTION_TYPE_FILTER:
       return action.data;
@@ -167,7 +182,8 @@ function transactionTypeFilter(state = "SHOW_ALL", action) {
 }
 
 export const bankApp = combineReducers({
-  accounts,
+  bank,
   transactionStartFilter,
-  transactionEndFilter
+  transactionEndFilter,
+  transactionTypeFilter
 });

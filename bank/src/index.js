@@ -26,48 +26,33 @@ const unsubscribe = store.subscribe(() => {
 
 console.log("initial state", store.getState());
 
-// store.dispatch(
-//   addGrocery({
-//     name: "potatoes",
-//     description: "Farm-fresh ground apples",
-//     amount: 2,
-//     category: "produce",
-//     purchased: false
-//   })
-// );
+store.dispatch(
+  addAccount({
+    owner: "bob",
+    amount: 10
+  })
+);
 
-// store.dispatch(
-//   addGroceries([
-//     {
-//       name: "carrots",
-//       description: "but actually purple carrots, because reasons",
-//       amount: 30,
-//       category: "produce",
-//       purchased: false
-//     },
-//     {
-//       name: "milk",
-//       description: "by the pint, like heathens",
-//       amount: 8,
-//       category: "dairy",
-//       purchased: false
-//     }
-//   ])
-// );
+store.dispatch(
+  addAccount({
+    owner: "mary",
+    amount: 20
+  })
+);
 
-// store.dispatch(
-//   updateGrocery(1, {
-//     description: "Farm-rotten ground apples"
-//   })
-// );
+store.dispatch(depositToAccount(1, 10));
 
-// store.dispatch(purchaseGrocery(1));
+store.dispatch(depositToAccount(10, 10));
 
-// store.dispatch(deleteGrocery(1));
+store.dispatch(withdrawFromAccount(1, 15));
 
-// store.dispatch(setCategoryFilter("SHOW_PRODUCE"));
+store.dispatch(transferBetweenAccounts(1, 2, 5));
 
-// store.dispatch(setPurchaseFilter("SHOW_PURCHASED"));
+store.dispatch(setTransactionEndFilter(Date.now()));
+
+store.dispatch(setTransactionStartFilter(Date.now()));
+
+store.dispatch(setTransactionTypeFilter(Date.now()));
 
 unsubscribe();
 
