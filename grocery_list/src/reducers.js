@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import {
   PURCHASE_GROCERY,
   ADD_GROCERY,
+  ADD_GROCERIES,
   DELETE_GROCERY,
   UPDATE_GROCERY,
   SET_PURCHASE_FILTER,
@@ -36,6 +37,9 @@ function groceries(state = [], action) {
 
     case ADD_GROCERY:
       return [...state, action.data];
+
+    case ADD_GROCERIES:
+      return [...state, ...action.data];
 
     case UPDATE_GROCERY:
       return state.map(

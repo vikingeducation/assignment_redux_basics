@@ -1,5 +1,6 @@
 // Grocery Actions
 export const ADD_GROCERY = "ADD_GROCERY";
+export const ADD_GROCERIES = "ADD_GROCERIES";
 export const PURCHASE_GROCERY = "PURCHASE_GROCERY";
 export const UPDATE_GROCERY = "UPDATE_GROCERY";
 export const DELETE_GROCERY = "DELETE_GROCERY";
@@ -15,6 +16,18 @@ export function addGrocery(data) {
       ...data,
       id: nextGroceryId++
     }
+  };
+}
+
+export function addGroceries(data) {
+  return {
+    type: ADD_GROCERIES,
+    data: data.map(grocery => {
+      return {
+        ...grocery,
+        id: nextGroceryId++
+      };
+    })
   };
 }
 
