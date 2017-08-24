@@ -1,6 +1,9 @@
 import { combineReducers } from "redux";
 // import actions here
 import {
+  DEPOSIT,
+  TRANSFER,
+  WITHDRAWAL,
   ADD_ACCOUNT,
   DEPOSIT_TO_ACCOUNT,
   WITHDRAW_FROM_ACCOUNT,
@@ -54,39 +57,60 @@ const transactionsEndFilterSchema = "SHOW_ALL"; // SHOW_{BEFORE_[DATE], ALL}
 const transactionsTypeFilterSchema = "SHOW_ALL"; // SHOW_{DEPOSIT, WITHDRAWAL, TRANSFER, ALL}
 
 // reducers
-function groceries(state = [], action) {
+function accounts(state = { accounts: [], transactions: [] }, action) {
   switch (action.type) {
-    case PURCHASE_GROCERY:
+    case ADD_ACCOUNT:
+      return { accounts: [...state.accounts, action.data] };
+
+    case DEPOSIT_TO_ACCOUNT:
+      const accounts = state.map(
+        account =>
+          account.id === action.data.id
+            ? { ...account, amount: account.amount + action.data.amount }
+            : account
+      );
+      const transaction = {
+        type: DEPOSIT,
+        id: action.data.transactionId,
+        sourceAccountId: null,
+        destinationAccountId: action.data.id,
+        amount: action.data.amount,
+        date: action.data.date || Date.now()
+      };
+
+    case WITHDRAW_FROM_ACCOUNT:
       return state.map(
-        grocery =>
-          grocery.id === action.data ? { ...grocery, purchased: true } : grocery
+        account =>
+          account.id === action.data.id
+            ? { ...account, amount: account.amount - action.data.amount }
+            : account
       );
 
-    case ADD_GROCERY:
-      return [...state, action.data];
-
-    case ADD_GROCERIES:
-      return [...state, ...action.data];
-
-    case UPDATE_GROCERY:
-      return state.map(
-        grocery =>
-          grocery.id === action.data.id
-            ? { ...grocery, ...action.data }
-            : grocery
-      );
-
-    case DELETE_GROCERY:
-      return state.filter(grocery => grocery.id !== action.data);
+    case TRANSFER_BETWEEN_ACCOUNTS:
+      let to = false;
+      let from = false;
+      const newState = state.map(account => {
+        if (account.id === action.data.toId) {
+          to = true;
+          return { ...account, amount: account.amount + action.data.amount };
+        } else if (account.id === action.data.fromId) {
+          from = true;
+          return { ...account, amount: account.amount - action.data.amount };
+        } else {
+          return account;
+        }
+      });
+      if (to && from) return newState;
+      else return state;
 
     default:
       return state;
   }
 }
 
-function purchaseFilter(state = "SHOW_ALL", action) {
+function transactionEndFilter(state = "SHOW_ALL", action) {
   switch (action.type) {
-    case SET_PURCHASE_FILTER:
+    case SET_TRANSACTION_END_FILTER:
       return action.data;
 
     default:
@@ -94,9 +118,19 @@ function purchaseFilter(state = "SHOW_ALL", action) {
   }
 }
 
-function categoryFilter(state = "SHOW_ALL", action) {
+function transactionStartFilter(state = "SHOW_ALL", action) {
   switch (action.type) {
-    case SET_CATEGORY_FILTER:
+    case SET_TRANSACTION_START_FILTER:
+      return action.data;
+
+    default:
+      return state;
+  }
+}
+
+function transactionTypeFilter(state = "SHOW_ALL", action) {
+  switch (action.type) {
+    case SET_TRANSACTION_TYPE_FILTER:
       return action.data;
 
     default:

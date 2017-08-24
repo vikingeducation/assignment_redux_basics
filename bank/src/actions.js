@@ -1,4 +1,7 @@
 // Bank Actions
+export const DEPOSIT = "DEPOSIT";
+export const TRANSFER = "TRANSFER";
+export const WITHDRAWAL = "WITHDRAWAL";
 export const ADD_ACCOUNT = "ADD_ACCOUNT";
 export const DEPOSIT_TO_ACCOUNT = "DEPOSIT_TO_ACCOUNT";
 export const WITHDRAW_FROM_ACCOUNT = "WITHDRAW_FROM_ACCOUNT";
@@ -21,51 +24,44 @@ export function addAccount(data) {
   };
 }
 
-export function depositToAccount(id, data) {
+export function depositToAccount(id, amount) {
   return {
     type: DEPOSIT_TO_ACCOUNT,
-    data: { ...data, id }
+    data: { amount, id }
   };
 }
 
-export function withdrawFromAccount(id) {
+export function withdrawFromAccount(id, amount) {
   return {
     type: WITHDRAW_FROM_ACCOUNT,
-    data: id
+    data: { amount, id }
   };
 }
 
-export function transferBetweenAccounts(data) {
+export function transferBetweenAccounts(toId, fromId, amount) {
   return {
     type: TRANSFER_BETWEEN_ACCOUNTS,
-    data
+    data: { toId, fromId, amount }
   };
 }
 
-export function setTransactionEndFilter(data) {
+export function setTransactionEndFilter(filter) {
   return {
     type: SET_TRANSACTION_END_FILTER,
-    data
+    data: filter
   };
 }
 
-export function setTransactionStartFilter(data) {
+export function setTransactionStartFilter(filter) {
   return {
     type: SET_TRANSACTION_START_FILTER,
-    data
+    data: filter
   };
 }
 
-export function setTransactionTypeFilter(data) {
+export function setTransactionTypeFilter(filter) {
   return {
     type: SET_TRANSACTION_TYPE_FILTER,
-    data
+    data: filter
   };
 }
-
-
-
-
-
-
-
