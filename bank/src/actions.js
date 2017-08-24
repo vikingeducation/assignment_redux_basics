@@ -27,21 +27,21 @@ export function addAccount(data) {
 export function depositToAccount(id, amount) {
   return {
     type: DEPOSIT_TO_ACCOUNT,
-    data: { amount, id }
+    data: { amount, id, transactionId: nextTransactionId++ }
   };
 }
 
 export function withdrawFromAccount(id, amount) {
   return {
     type: WITHDRAW_FROM_ACCOUNT,
-    data: { amount, id }
+    data: { amount, id, transactionId: nextTransactionId++ }
   };
 }
 
 export function transferBetweenAccounts(toId, fromId, amount) {
   return {
     type: TRANSFER_BETWEEN_ACCOUNTS,
-    data: { toId, fromId, amount }
+    data: { toId, fromId, amount, transactionId: nextTransactionId++ }
   };
 }
 
