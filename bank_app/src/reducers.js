@@ -39,7 +39,7 @@ const SET_FILTER_END = "SET_FILTER_END";
 
 let nextTransactionId = 2;
 
-function bankApp(state = initialState, action) {
+export function bankApp(state = initialState, action) {
 	switch (action.type) {
 		case SELECT_ACCOUNT:
 			return {
@@ -60,7 +60,7 @@ function bankApp(state = initialState, action) {
 					return account;
 				}),
 				transactions: [
-					...transactions,
+					...state.transactions,
 					{
 						id: nextTransactionId++,
 						origin: null,
@@ -84,7 +84,7 @@ function bankApp(state = initialState, action) {
 					return account;
 				}),
 				transactions: [
-					...transactions,
+					...state.transactions,
 					{
 						id: nextTransactionId++,
 						origin: action.data.id,
@@ -114,7 +114,7 @@ function bankApp(state = initialState, action) {
 					return account;
 				}),
 				transactions: [
-					...transactions,
+					...state.transactions,
 					{
 						id: nextTransactionId++,
 						origin: action.data.from,
