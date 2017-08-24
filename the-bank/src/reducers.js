@@ -5,7 +5,7 @@ import {
   TRANSFER_FUNDS,
   SET_TRANSACTIONS_DATE_FILTER,
   SET_CURRENT_ACCOUNT
-} from "./index";
+} from "./actions";
 
 export function accounts(state = [], action) {
   switch (action.type) {

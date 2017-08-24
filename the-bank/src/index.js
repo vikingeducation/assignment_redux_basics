@@ -5,6 +5,13 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import { combineReducers, createStore } from "redux";
 import { accounts, currentAccount, transactionsDateFilter } from "./reducers";
+import {
+  depositFunds,
+  withdrawFunds,
+  transferFunds,
+  setTransactionsDateFilter,
+  setCurrentAccount
+} from "./actions";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 registerServiceWorker();
@@ -70,66 +77,18 @@ let initAccountData = [
   }
 ];
 
-/*
-Select an account to view.
-Deposit funds into an account.
-Withdraw funds from an account.
-Transfer funds between accounts.
-Filter transactions by date (using a start and end date) for an account.
-*/
-
-//action constants
-export const DEPOSIT_FUNDS = `DEPOSIT_FUNDS`;
-export const WITHDRAW_FUNDS = `WITHDRAW_FUNDS`;
-export const TRANSFER_FUNDS = `TRANSFER_FUNDS`;
-export const SET_TRANSACTIONS_DATE_FILTER = `SET_TRANSACTIONS_DATE_FILTER`;
-export const SET_CURRENT_ACCOUNT = `SET_CURRENT_ACCOUNT`;
-
-//action creators
-
-const depositFunds = data => {
-  return {
-    type: DEPOSIT_FUNDS,
-    data: { ...data }
-  };
-};
-const withdrawFunds = data => {
-  return {
-    type: WITHDRAW_FUNDS,
-    data: { ...data }
-  };
-};
-const transferFunds = data => {
-  return {
-    type: TRANSFER_FUNDS,
-    data: { ...data }
-  };
-};
-const setTransactionsDateFilter = data => {
-  return {
-    type: SET_TRANSACTIONS_DATE_FILTER,
-    data: { ...data }
-  };
-};
-const setCurrentAccount = id => {
-  return {
-    type: SET_CURRENT_ACCOUNT,
-    data: id
-  };
-};
-
 const bankApp = combineReducers({
   accounts,
   transactionsDateFilter,
   currentAccount
 });
-let init = {
+let initStore = {
   accounts: initAccountData,
   transactionsDateFilter: "NEVER",
   currentAccount: "BOB"
 };
 
-const store = createStore(bankApp, init);
+const store = createStore(bankApp, initStore);
 
 const unsubscribe = store.subscribe(() => {
   console.log(store.getState());
@@ -169,7 +128,7 @@ store.dispatch(
   })
 );
 
-unsubscribe();
+// unsubscribe();
 
 ReactDOM.render(<App />, document.getElementById("root"));
 registerServiceWorker();
