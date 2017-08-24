@@ -1,35 +1,36 @@
-export const ACTION_CREATE_ACCOUNT = "ACTION_CREATE_ACCOUNT";
-export const ACTION_WITHDRAW = "ACTION_WITHDRAW";
-export const ACTION_DEPOSIT = "ACTION_DEPOSIT";
-export const ACTION_TRANSFER = "ACTION_TRANSFER";
+export const ACTION_CREATE_ACCOUNT = 'ACTION_CREATE_ACCOUNT';
+export const ACTION_WITHDRAW = 'ACTION_WITHDRAW';
+export const ACTION_DEPOSIT = 'ACTION_DEPOSIT';
+export const ACTION_TRANSFER = 'ACTION_TRANSFER';
 
-let accountId = 1,
-  transactionId = 1;
+let accountId = 0,
+	transactionId = 0;
+const incrementId = type => {
+	let id = 0;
+	switch (type) {
+		case ACTION_CREATE_ACCOUNT:
+			id = ++accountId;
+			break;
+		default:
+			id = ++transactionId;
+	}
+	return id;
+};
 
-const createAction = (type, preData) => data => ({
-  type,
-  data: Object.assign({}, data, preData)
-});
-
-// function createAction(type, preData) {
-//   return function(data) {
-//     return {
-//       type,
-//       data: Object.assign({}, data, preData)
-//     };
-//   };
-// }
+const createAction = (type, defaults = {}) => data => {
+	defaults.id = incrementId(type);
+	defaults.date = new Date().toJSON();
+	return {
+		type,
+		data: Object.assign({}, defaults, data)
+	};
+};
 
 export const createAccount = createAction(ACTION_CREATE_ACCOUNT, {
-  id: accountId++,
-  transactions: [],
-  funds: 1000
+	transactions: [],
+	funds: 0
 });
 
-const transactionProp = {
-  id: transactionId++,
-  date: new Date().toJSON()
-};
-export const deposit = createAction(ACTION_DEPOSIT, transactionProp);
-export const withdraw = createAction(ACTION_WITHDRAW, transactionProp);
-export const transfer = createAction(ACTION_TRANSFER, transactionProp);
+export const deposit = createAction(ACTION_DEPOSIT);
+export const withdraw = createAction(ACTION_WITHDRAW);
+export const transfer = createAction(ACTION_TRANSFER);
