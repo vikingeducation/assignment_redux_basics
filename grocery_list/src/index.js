@@ -6,7 +6,13 @@ import registerServiceWorker from "./registerServiceWorker";
 
 import { createStore } from "redux";
 import groceryApp from "./reducers";
-import { addItem, purchaseItem } from "./actions";
+import {
+	addItem,
+	purchaseItem,
+	setPurchasedFilter,
+	setCategoryFilter,
+	setSortType
+} from "./actions";
 
 const store = createStore(groceryApp);
 
@@ -44,11 +50,13 @@ store.dispatch(
 	})
 );
 
-store.dispatch(
-	purchaseItem(2)
-)
+store.dispatch(purchaseItem(2));
 
-store.dispatch(setPurchasedFilter("PURCHASED"))
+store.dispatch(setPurchasedFilter("PURCHASED"));
+
+store.dispatch(setCategoryFilter("dairy"));
+
+store.dispatch(setSortType("description"));
 
 unsubscribe();
 
