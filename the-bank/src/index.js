@@ -12,9 +12,6 @@ import {
   setTransactionsDateFilter,
   setCurrentAccount
 } from "./actions";
-
-ReactDOM.render(<App />, document.getElementById("root"));
-registerServiceWorker();
 //
 // id: 3,
 // balance: Math.floor(Math.random() * 10000),
@@ -89,7 +86,6 @@ let initStore = {
 };
 
 const store = createStore(bankApp, initStore);
-
 const unsubscribe = store.subscribe(() => {
   console.log(store.getState());
 });
@@ -129,6 +125,5 @@ store.dispatch(
 );
 
 // unsubscribe();
-
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App {...store.getState()} />, document.getElementById("root"));
 registerServiceWorker();

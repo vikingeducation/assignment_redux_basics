@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
 import Pane from "./components/Pane";
+import Button from "./components/elements/Button";
 class App extends Component {
   render() {
+    let { accounts } = this.props;
+    console.log(accounts, " accounts ");
     return (
       <div className="App">
         <div className="App-header">
@@ -10,8 +13,9 @@ class App extends Component {
         </div>
         <div className="container-fluid">
           <div className="row">
-            <Pane />
-            <Pane />
+            <Pane accounts={accounts} />
+            <Pane accounts={accounts} />
+            <Button />
           </div>
         </div>
       </div>
