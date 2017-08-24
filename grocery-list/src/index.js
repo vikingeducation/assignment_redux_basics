@@ -13,42 +13,59 @@ const PURCHASE_ITEM = `PURCHASE_ITEM`;
 //actions as functions
 const purchaseItem = id => {
   return {
-    type: _ITEM,
-    data: {
-      ...data,
-      data: id
-    }
+    type: PURCHASE_ITEM,
+    data: id
+    //
+    // data: {
+    //   ...data,
+    //   data: id
+    // }
   };
 };
 const removeItem = id => {
   return {
-    type: _ITEM,
-    data: {
-      ...data,
-      data: id
-    }
+    type: REMOVE_ITEM,
+    data: id
+    // data: {
+    //   ...data,
+    //   data: id
+    // }
   };
 };
-const addItem = id => {
+let itemId = 1;
+const addItem = data => {
   return {
-    type: _ITEM,
+    type: ADD_ITEM,
     data: {
       ...data,
-      data: id
+      id: itemId++
     }
   };
 };
 
-//reducers?
-function groceryApp() {}
-
-const groceryApp = combineReducers(
-  {
-    //reducers
+//reducers? state = {[]} ???? what is R store?
+function groceryApp(state = [], action) {
+  switch (action.type) {
+    case ADD_ITEM:
+      return [...state, action.data];
+    case REMOVE_ITEM:
+      return state.filter(item => action.data !== item.id);
+    case PURCHASE_ITEM:
+      return state.map(item => {
+        if (item.id === action.data) {
+          return {
+            ...item,
+            purchased: true
+          };
+        }
+        return item;
+      });
+    default:
+      return state;
   }
-);
+}
 
-const store = createStore();
+const store = createStore(groceryApp);
 
 const unsubscribe = store.subscribe(() => {
   console.log(store.getState());
@@ -57,4 +74,4 @@ const unsubscribe = store.subscribe(() => {
 unsubscribe();
 
 ReactDOM.render(<App />, document.getElementById("root"));
-registerServiceWorker();
+registerServiceWorker(); //magicks!!!!!
