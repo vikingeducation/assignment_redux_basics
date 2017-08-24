@@ -5,34 +5,31 @@ const TRANSFER = "TRANSFER";
 const SET_FILTER_START = "SET_FILTER_START";
 const SET_FILTER_END = "SET_FILTER_END";
 
-
-let nextTransactionId = 2;
-
-export function selectAccount (id) {
-  return {
-    type: SELECT_ACCOUNT,
-    data: id
-  }
+export function selectAccount(id) {
+	return {
+		type: SELECT_ACCOUNT,
+		data: id
+	};
 }
 
-export function depositToAccount (id, amount) {
-  return {
-    type: DEPOSIT_TO_ACCOUNT,
-    data: {
-      id: id,
-      amount: amount
-    }
-  }
+export function depositToAccount(id, amount) {
+	return {
+		type: DEPOSIT_TO_ACCOUNT,
+		data: {
+			id: id,
+			amount: amount
+		}
+	};
 }
 
-export function withdrawFromAccount (id, amount) {
-  return {
-    type: WITHDRAW_FROM_ACCOUNT,
-    data: {
-      id: id,
-      amount: amount
-    }
-  }
+export function withdrawFromAccount(id, amount) {
+	return {
+		type: WITHDRAW_FROM_ACCOUNT,
+		data: {
+			id: id,
+			amount: amount
+		}
+	};
 }
 
 // data object like: {
@@ -41,23 +38,23 @@ export function withdrawFromAccount (id, amount) {
 //   amount: amount
 // }
 
-export function transfer (data) {
-  return {
-    type: TRANSFER,
-    data: data
-  }
+export function transfer(data) {
+	return {
+		type: TRANSFER,
+		data: data
+	};
 }
 
-export function setFilterStart (date) {
-  return {
-    type: SET_FILTER_START,
-    data: date
-  }
+export function setFilterStart(date) {
+	return {
+		type: SET_FILTER_START,
+		data: date
+	};
 }
 
-export function setFilterEnd (date) {
-  return {
-    type: SET_FILTER_END,
-    data: date
-  }
+export function setFilterEnd(date) {
+	return {
+		type: SET_FILTER_END,
+		data: date
+	};
 }
