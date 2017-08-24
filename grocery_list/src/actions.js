@@ -9,46 +9,46 @@ export const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
 // Action Factories
 let nextGroceryId = 1;
 export function addGrocery(data) {
-	return {
-		type: ADD_GROCERY,
-		data: {
-			...data,
-			id: nextGroceryId++
-		}
-	};
+  return {
+    type: ADD_GROCERY,
+    data: {
+      ...data,
+      id: nextGroceryId++
+    }
+  };
 }
 
 export function purchaseGrocery(id) {
-	return {
-		type: PURCHASE_GROCERY,
-		data: id
-	};
+  return {
+    type: PURCHASE_GROCERY,
+    data: id
+  };
 }
 
-export function updateGrocery(data) {
-	return {
-		type: UPDATE_GROCERY,
-		data
-	};
+export function updateGrocery(id, data) {
+  return {
+    type: UPDATE_GROCERY,
+    data: { ...data, id }
+  };
 }
 
 export function deleteGrocery(id) {
-	return {
-		type: DELETE_GROCERY,
-		data: id
-	};
+  return {
+    type: DELETE_GROCERY,
+    data: id
+  };
 }
 
 export function setCategoryFilter(data) {
-	return {
-		type: SET_CATEGORY_FILTER,
-		data
-	};
+  return {
+    type: SET_CATEGORY_FILTER,
+    data
+  };
 }
 
 export function setPurchaseFilter(data) {
-	return {
-		type: SET_PURCHASE_FILTER,
-		data
-	};
+  return {
+    type: SET_PURCHASE_FILTER,
+    data
+  };
 }

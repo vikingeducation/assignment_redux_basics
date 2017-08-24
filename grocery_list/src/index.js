@@ -9,36 +9,36 @@ import { groceriesApp } from "./reducers";
 
 // import actions here
 import {
-	addGrocery,
-	updateGrocery,
-	deleteGrocery,
-	purchaseGrocery,
-	setPurchaseFilter,
-	setCategoryFilter
+  addGrocery,
+  updateGrocery,
+  deleteGrocery,
+  purchaseGrocery,
+  setPurchaseFilter,
+  setCategoryFilter
 } from "./actions";
 
 const store = createStore(groceriesApp);
 
 const unsubscribe = store.subscribe(() => {
-	console.log(store.getState());
+  console.log(store.getState());
 });
 
 console.log("initial state", store.getState());
 
 store.dispatch(
-	addGrocery({
-		name: "potatoes",
-		description: "Farm-fresh ground apples",
-		amount: 2,
-		category: "produce",
-		purchased: false
-	})
+  addGrocery({
+    name: "potatoes",
+    description: "Farm-fresh ground apples",
+    amount: 2,
+    category: "produce",
+    purchased: false
+  })
 );
 
 store.dispatch(
-	updateGrocery({
-		description: "Farm-rotten ground apples"
-	})
+  updateGrocery(1, {
+    description: "Farm-rotten ground apples"
+  })
 );
 
 store.dispatch(purchaseGrocery(1));
