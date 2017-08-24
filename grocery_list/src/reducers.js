@@ -10,21 +10,21 @@ import {
   SET_CATEGORY_FILTER
 } from "./actions";
 
-// schemas
-const groceryListSchema = [
-  {
-    id: 1,
-    name: "potatoes",
-    description: "Farm-fresh ground apples",
-    amount: 2,
-    category: "produce",
-    purchased: true
-  }
-];
+// // schemas
+// const groceryListSchema = [
+//   {
+//     id: 1,
+//     name: "potatoes",
+//     description: "Farm-fresh ground apples",
+//     amount: 2,
+//     category: "produce",
+//     purchased: true
+//   }
+// ];
 
-const purchasedFilterSchema = "SHOW_ALL"; // SHOW_{PUCHASED, NOT_PURCHASED, ALL}
+// const purchasedFilterSchema = "SHOW_ALL"; // SHOW_{PUCHASED, NOT_PURCHASED, ALL}
 
-const categoryFilterSchema = "SHOW_ALL"; // SHOW_{CATEGORY_[name], ALL}
+// const categoryFilterSchema = "SHOW_ALL"; // SHOW_{CATEGORY_[name], ALL}
 
 // reducers
 function groceries(state = [], action) {
