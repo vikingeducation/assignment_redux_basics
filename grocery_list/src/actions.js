@@ -10,6 +10,7 @@ export const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
 // Action Factories
 let nextGroceryId = 1;
 export function addGrocery(data) {
+  console.log("hit this ");
   return {
     type: ADD_GROCERY,
     data: {

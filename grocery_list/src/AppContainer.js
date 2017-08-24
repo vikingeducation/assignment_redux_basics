@@ -5,7 +5,7 @@ import * as actions from "./actions";
 import App from "./App";
 class AppContainer extends Component {
   render() {
-    return <App />;
+    return <App {...this.props} />;
   }
 }
 const mapStateToProps = state => {

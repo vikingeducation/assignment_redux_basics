@@ -1,15 +1,12 @@
 import React from "react";
+import GroceryList from "./GroceryList";
 
 export default props => {
-  console.log(this.props);
+  console.log(props, "passed down?");
   return (
-    <div className="App">
-      <div className="App-header">
-        <h2>Welcome to React</h2>
-      </div>
-      <p className="App-intro">
-        To get started, edit <code>src/App.js</code> and save to reload.
-      </p>
+    <div className="container">
+      <h1>The Bestest Grocery App Ever</h1>
+      <GroceryList {...props} />
     </div>
   );
 };
