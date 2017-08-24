@@ -6,20 +6,19 @@ export const ACTION_TRANSFER = 'ACTION_TRANSFER';
 let accountId = 0,
 	transactionId = 0;
 const incrementId = type => {
-	let id = 0;
 	switch (type) {
 		case ACTION_CREATE_ACCOUNT:
-			id = ++accountId;
+			return ++accountId;
 			break;
 		default:
-			id = ++transactionId;
+			return ++transactionId;
 	}
-	return id;
 };
 
 const createAction = (type, defaults = {}) => data => {
 	defaults.id = incrementId(type);
 	defaults.date = new Date().toJSON();
+	if (type === ACTION_CREATE_ACCOUNT) defaults.transactions = [];
 	return {
 		type,
 		data: Object.assign({}, defaults, data)
@@ -27,7 +26,6 @@ const createAction = (type, defaults = {}) => data => {
 };
 
 export const createAccount = createAction(ACTION_CREATE_ACCOUNT, {
-	transactions: [],
 	funds: 0
 });
 
