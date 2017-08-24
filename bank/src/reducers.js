@@ -1,30 +1,57 @@
 import { combineReducers } from "redux";
 // import actions here
 import {
-  PURCHASE_GROCERY,
-  ADD_GROCERY,
-  ADD_GROCERIES,
-  DELETE_GROCERY,
-  UPDATE_GROCERY,
-  SET_PURCHASE_FILTER,
-  SET_CATEGORY_FILTER
+  ADD_ACCOUNT,
+  DEPOSIT_TO_ACCOUNT,
+  WITHDRAW_FROM_ACCOUNT,
+  TRANSFER_BETWEEN_ACCOUNTS,
+  SET_TRANSACTION_START_FILTER,
+  SET_TRANSACTION_END_FILTER,
+  SET_TRANSACTION_TYPE_FILTER
 } from "./actions";
 
 // schemas
-const groceryListSchema = [
+const accountSchema = [
   {
     id: 1,
-    name: "potatoes",
-    description: "Farm-fresh ground apples",
-    amount: 2,
-    category: "produce",
-    purchased: true
+    owner: "bob",
+    balance: 10
   }
 ];
 
-const purchasedFilterSchema = "SHOW_ALL"; // SHOW_{PUCHASED, NOT_PURCHASED, ALL}
+const transaction = [
+  {
+    type: "deposit",
+    id: 1,
+    sourceAccountId: null,
+    destinationAccountId: 2,
+    amount: 500,
+    date: Date.now() // default
+  },
+  {
+    type: "withdrawl",
+    id: 1,
+    sourceAccountId: 1,
+    destinationAccountId: null,
+    amount: 500,
+    date: Date.now() // default
+  },
 
-const categoryFilterSchema = "SHOW_ALL"; // SHOW_{CATEGORY_[name], ALL}
+  {
+    type: "transfer",
+    id: 1,
+    sourceAccountId: 1,
+    destinationAccountId: 2,
+    amount: 500,
+    date: Date.now() // default
+  }
+];
+
+const transactionsStartFilterSchema = "SHOW_ALL"; // SHOW_{AFTER_[DATE], ALL}
+
+const transactionsEndFilterSchema = "SHOW_ALL"; // SHOW_{BEFORE_[DATE], ALL}
+
+const transactionsTypeFilterSchema = "SHOW_ALL"; // SHOW_{DEPOSIT, WITHDRAWAL, TRANSFER, ALL}
 
 // reducers
 function groceries(state = [], action) {

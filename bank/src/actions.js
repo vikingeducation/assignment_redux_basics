@@ -1,67 +1,71 @@
-// Grocery Actions
-export const ADD_GROCERY = "ADD_GROCERY";
-export const ADD_GROCERIES = "ADD_GROCERIES";
-export const PURCHASE_GROCERY = "PURCHASE_GROCERY";
-export const UPDATE_GROCERY = "UPDATE_GROCERY";
-export const DELETE_GROCERY = "DELETE_GROCERY";
-export const SET_PURCHASE_FILTER = "SET_PURCHASE_FILTER";
-export const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
+// Bank Actions
+export const ADD_ACCOUNT = "ADD_ACCOUNT";
+export const DEPOSIT_TO_ACCOUNT = "DEPOSIT_TO_ACCOUNT";
+export const WITHDRAW_FROM_ACCOUNT = "WITHDRAW_FROM_ACCOUNT";
+export const TRANSFER_BETWEEN_ACCOUNTS = "TRANSFER_BETWEEN_ACCOUNTS";
+export const SET_TRANSACTION_END_FILTER = "SET_TRANSACTION_TYPE_FILTER";
+export const SET_TRANSACTION_TYPE_FILTER = "SET_TRANSACTION_TYPE_FILTER";
+export const SET_TRANSACTION_START_FILTER = "SET_TRANSACTION_START_FILTER";
 
-// Action Factories
-let nextGroceryId = 1;
-export function addGrocery(data) {
+let nextTransactionId = 1;
+let nextAccountId = 1;
+
+// action factories
+export function addAccount(data) {
   return {
-    type: ADD_GROCERY,
+    type: ADD_ACCOUNT,
     data: {
       ...data,
-      id: nextGroceryId++
+      id: nextAccountId++
     }
   };
 }
 
-export function addGroceries(data) {
+export function depositToAccount(id, data) {
   return {
-    type: ADD_GROCERIES,
-    data: data.map(grocery => {
-      return {
-        ...grocery,
-        id: nextGroceryId++
-      };
-    })
-  };
-}
-
-export function purchaseGrocery(id) {
-  return {
-    type: PURCHASE_GROCERY,
-    data: id
-  };
-}
-
-export function updateGrocery(id, data) {
-  return {
-    type: UPDATE_GROCERY,
+    type: DEPOSIT_TO_ACCOUNT,
     data: { ...data, id }
   };
 }
 
-export function deleteGrocery(id) {
+export function withdrawFromAccount(id) {
   return {
-    type: DELETE_GROCERY,
+    type: WITHDRAW_FROM_ACCOUNT,
     data: id
   };
 }
 
-export function setCategoryFilter(data) {
+export function transferBetweenAccounts(data) {
   return {
-    type: SET_CATEGORY_FILTER,
+    type: TRANSFER_BETWEEN_ACCOUNTS,
     data
   };
 }
 
-export function setPurchaseFilter(data) {
+export function setTransactionEndFilter(data) {
   return {
-    type: SET_PURCHASE_FILTER,
+    type: SET_TRANSACTION_END_FILTER,
     data
   };
 }
+
+export function setTransactionStartFilter(data) {
+  return {
+    type: SET_TRANSACTION_START_FILTER,
+    data
+  };
+}
+
+export function setTransactionTypeFilter(data) {
+  return {
+    type: SET_TRANSACTION_TYPE_FILTER,
+    data
+  };
+}
+
+
+
+
+
+
+
