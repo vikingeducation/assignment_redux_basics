@@ -62,23 +62,20 @@ const getItems = (category = 'all', filter) => {
 						);
 						break;
 				}
-			} else if (typeof type === 'function') {
-				items = items.sort(type);
-			} else {
-				return (items = items.sort());
-			}
+			} else if (typeof type === 'function') items = items.sort(type);
+			else items = items.sort();
 			return returnObj;
 		}
 	};
 	return returnObj;
 };
 
-//getItems('kids').print();
-//getItems('all', el => el.amount > 5).sort('name').print();
+getItems('kids').print();
+getItems('all', el => el.amount > 5).sort('name').print();
 getItems('kids', el => el.purchased)
 	.sort((a, b) => a.amount - b.amount)
 	.print();
-//getItems('all', el => el.purchased).print();
+getItems('all', el => el.purchased).print();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
