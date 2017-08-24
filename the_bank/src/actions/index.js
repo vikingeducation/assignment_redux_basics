@@ -6,13 +6,15 @@ export const ACTION_TRANSFER = 'ACTION_TRANSFER';
 let accountId = 0,
 	transactionId = 0;
 const incrementId = type => {
+	let id = 0;
 	switch (type) {
 		case ACTION_CREATE_ACCOUNT:
-			return ++accountId;
+			id = ++accountId;
 			break;
 		default:
-			return ++transactionId;
+			id = ++transactionId;
 	}
+	return id;
 };
 
 const createAction = (type, defaults = {}) => data => {
