@@ -63,7 +63,7 @@ function accounts(state = { accounts: [], transactions: [] }, action) {
       return { accounts: [...state.accounts, action.data] };
 
     case DEPOSIT_TO_ACCOUNT:
-      const accounts = state.map(
+      const accounts = state.accounts.map(
         account =>
           account.id === action.data.id
             ? { ...account, amount: account.amount + action.data.amount }
@@ -77,19 +77,35 @@ function accounts(state = { accounts: [], transactions: [] }, action) {
         amount: action.data.amount,
         date: action.data.date || Date.now()
       };
+      return {
+        accounts: accounts,
+        transactions: [...state.transactions, transaction]
+      };
 
     case WITHDRAW_FROM_ACCOUNT:
-      return state.map(
+      const accounts = state.accounts.map(
         account =>
           account.id === action.data.id
             ? { ...account, amount: account.amount - action.data.amount }
             : account
       );
+      const transaction = {
+        type: WITHDRAWAL,
+        id: action.data.transactionId,
+        sourceAccountId: action.data.id,
+        destinationAccountId: null,
+        amount: action.data.amount,
+        date: action.data.date || Date.now()
+      };
+      return {
+        accounts: accounts,
+        transactions: [...state.transactions, transaction]
+      };
 
     case TRANSFER_BETWEEN_ACCOUNTS:
       let to = false;
       let from = false;
-      const newState = state.map(account => {
+      const accounts = state.accounts.map(account => {
         if (account.id === action.data.toId) {
           to = true;
           return { ...account, amount: account.amount + action.data.amount };
@@ -99,9 +115,21 @@ function accounts(state = { accounts: [], transactions: [] }, action) {
         } else {
           return account;
         }
+        const transaction = {
+          type: TRANSFER,
+          id: action.data.transactionId,
+          sourceAccountId: action.data.fromId,
+          destinationAccountId: action.data.toId,
+          amount: action.data.amount,
+          date: action.data.date || Date.now()
+        };
       });
-      if (to && from) return newState;
-      else return state;
+      if (to && from) {
+        return {
+          accounts: accounts,
+          transactions: [...state.transactions, transaction]
+        };
+      } else return state;
 
     default:
       return state;
