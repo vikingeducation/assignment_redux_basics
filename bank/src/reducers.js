@@ -63,13 +63,13 @@ function accounts(state = { accounts: [], transactions: [] }, action) {
       return { accounts: [...state.accounts, action.data] };
 
     case DEPOSIT_TO_ACCOUNT:
-      const accounts = state.accounts.map(
+      const depositAccounts = state.accounts.map(
         account =>
           account.id === action.data.id
             ? { ...account, amount: account.amount + action.data.amount }
             : account
       );
-      const transaction = {
+      const depositTransaction = {
         type: DEPOSIT,
         id: action.data.transactionId,
         sourceAccountId: null,
@@ -78,18 +78,18 @@ function accounts(state = { accounts: [], transactions: [] }, action) {
         date: action.data.date || Date.now()
       };
       return {
-        accounts: accounts,
-        transactions: [...state.transactions, transaction]
+        accounts: depositAccounts,
+        transactions: [...state.transactions, depositTransaction]
       };
 
     case WITHDRAW_FROM_ACCOUNT:
-      const accounts = state.accounts.map(
+      const withdrawAccounts = state.accounts.map(
         account =>
           account.id === action.data.id
             ? { ...account, amount: account.amount - action.data.amount }
             : account
       );
-      const transaction = {
+      const withdrawTransaction = {
         type: WITHDRAWAL,
         id: action.data.transactionId,
         sourceAccountId: action.data.id,
@@ -98,14 +98,14 @@ function accounts(state = { accounts: [], transactions: [] }, action) {
         date: action.data.date || Date.now()
       };
       return {
-        accounts: accounts,
-        transactions: [...state.transactions, transaction]
+        accounts: withdrawAccounts,
+        transactions: [...state.transactions, withdrawTransaction]
       };
 
     case TRANSFER_BETWEEN_ACCOUNTS:
       let to = false;
       let from = false;
-      const accounts = state.accounts.map(account => {
+      const transferAccounts = state.accounts.map(account => {
         if (account.id === action.data.toId) {
           to = true;
           return { ...account, amount: account.amount + action.data.amount };
@@ -115,7 +115,9 @@ function accounts(state = { accounts: [], transactions: [] }, action) {
         } else {
           return account;
         }
-        const transaction = {
+      });
+      if (to && from) {
+        const transferTransaction = {
           type: TRANSFER,
           id: action.data.transactionId,
           sourceAccountId: action.data.fromId,
@@ -123,11 +125,9 @@ function accounts(state = { accounts: [], transactions: [] }, action) {
           amount: action.data.amount,
           date: action.data.date || Date.now()
         };
-      });
-      if (to && from) {
         return {
-          accounts: accounts,
-          transactions: [...state.transactions, transaction]
+          accounts: transferAccounts,
+          transactions: [...state.transactions, transferTransaction]
         };
       } else return state;
 
@@ -166,8 +166,8 @@ function transactionTypeFilter(state = "SHOW_ALL", action) {
   }
 }
 
-export const groceriesApp = combineReducers({
-  groceries,
-  purchaseFilter,
-  categoryFilter
+export const bankApp = combineReducers({
+  accounts,
+  transactionStartFilter,
+  transactionEndFilter
 });
