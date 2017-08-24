@@ -1,7 +1,0 @@
-//action type
-
-
-
-
-
-export makeDeposit

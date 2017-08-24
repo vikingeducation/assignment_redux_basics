@@ -7,14 +7,14 @@ import {
   SET_CURRENT_ACCOUNT
 } from "./index";
 
-export function funds(state, action) {
+export function accounts(state = [], action) {
   switch (action.type) {
     case DEPOSIT_FUNDS:
-      state.accounts.map(a => {
+      return state.map(account => {
         if (account.id === action.data.id) {
           return {
             ...account,
-            balance: (account.balance += action.data.amount),
+            balance: account.balance + action.data.amount,
             transactions: [
               ...account.transactions,
               { date: Date.now(), amount: action.data.amount }
@@ -25,11 +25,11 @@ export function funds(state, action) {
       });
       break;
     case WITHDRAW_FUNDS:
-      state.accounts.map(a => {
+      return state.map(account => {
         if (account.id === action.data.id) {
           return {
             ...account,
-            balance: (account.balance -= action.data.amount),
+            balance: account.balance - action.data.amount,
             transactions: [
               ...account.transactions,
               { date: Date.now(), amount: -action.data.amount }
@@ -40,11 +40,11 @@ export function funds(state, action) {
       });
       break;
     case TRANSFER_FUNDS:
-      state.accounts.map(a => {
+      return state.map(account => {
         if (account.id === action.data.recipientId) {
           return {
             ...account,
-            balance: (account.balance += action.data.amount),
+            balance: account.balance + action.data.amount,
             transactions: [
               ...account.transactions,
               { date: Date.now(), amount: action.data.amount }
@@ -54,7 +54,7 @@ export function funds(state, action) {
         if (account.id === action.data.senderId) {
           return {
             ...account,
-            balance: (account.balance -= action.data.amount),
+            balance: account.balance - action.data.amount,
             transactions: [
               ...account.transactions,
               { date: Date.now(), amount: -action.data.amount }
@@ -68,19 +68,19 @@ export function funds(state, action) {
       return state;
   }
 }
-export function transactionsDateFilter(state, action) {
+export function transactionsDateFilter(state = "NEVER", action) {
   switch (action.type) {
     case SET_TRANSACTIONS_DATE_FILTER:
-      // action.data;
+      return action.data;
       break;
     default:
       return state;
   }
 }
-export function currentAccount(state, action) {
+export function currentAccount(state = [], action) {
   switch (action.type) {
     case SET_CURRENT_ACCOUNT:
-      // action.id;
+      return action.data;
       break;
     default:
       return state;

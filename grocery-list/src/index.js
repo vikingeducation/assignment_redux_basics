@@ -26,16 +26,19 @@ const removeItem = id => {
     data: id
   };
 };
-let itemId = 1;
-const addItem = data => {
-  return {
-    type: ADD_ITEM,
-    data: {
-      ...data,
-      id: itemId++
-    }
+//IIFE FTW
+const addItem = (function() {
+  let itemId = 1;
+  return data => {
+    return {
+      type: ADD_ITEM,
+      data: {
+        ...data,
+        id: itemId++
+      }
+    };
   };
-};
+})();
 const setPurchasedFilter = filter => {
   return {
     type: SET_PURCHASED_FILTER,
