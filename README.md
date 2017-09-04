@@ -2,11 +2,11 @@
 
 Author: Ian Halverson
 
-This project demonstrates the basics of using Redux. The ations, reducers, etc
+This project demonstrates the basics of using Redux. The actions, reducers, etc
 are located in:
 
-the-bank/src/index.js
-the-bank/src/reducers.js
+the-bank/src/index.js,
+the-bank/src/reducers.js,
 the-bank/src/actions.js
 
 grocery-list/src/index.js
