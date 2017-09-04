@@ -1,18 +1,30 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Table from "./Table";
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      accounts: []
+    };
+  }
+
+  showTransfers = () => {};
   render() {
+    console.log(this.props);
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Table value={this.props.value} state={this.state} />
+        <form>
+          <label>name</label>
+          <input type="text" name="name" id="name" />
+          <label>amount</label>
+          <input type="number" name="amount" id="amount" />
+          <button type="submit" onSubmit={this.props.onSubmit}>
+            add user
+          </button>
+        </form>
       </div>
     );
   }

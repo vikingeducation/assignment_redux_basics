@@ -1,2 +1,1 @@
-# assignment_redux_basics
-Milk, eggs, ice cream and money, money, money!
+Playing around with reducers and actions
