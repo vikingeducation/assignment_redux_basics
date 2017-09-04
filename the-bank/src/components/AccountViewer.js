@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 
-const AccountViewer = ({ accounts }) => {
-  <div className="">
-    Hello
-    {accounts}
-  </div>;
+const AccountViewer = ({ id, name }) => {
+  return (
+    <div className="">
+      {name}
+    </div>
+  );
 };
 
 export default AccountViewer;

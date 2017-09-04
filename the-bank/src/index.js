@@ -12,23 +12,12 @@ import {
   setTransactionsDateFilter,
   setCurrentAccount
 } from "./actions";
-//
-// id: 3,
-// balance: Math.floor(Math.random() * 10000),
-// transactionsFilter: "SHOW_ALL",
-// transactions: [
-//   {
-//     date: 2017 - 12 - 1,
-//     amount: +100
-//   }
-// ]
 
 let initAccountData = [
   {
     id: 1,
     name: "ZZZZZZZ",
     balance: 100,
-    transactionsFilter: "SHOW_ALL",
     transactions: [
       {
         date: 2017 - 12 - 1,
@@ -40,7 +29,6 @@ let initAccountData = [
     id: 2,
     name: "GEORGE",
     balance: 100,
-    transactionsFilter: "SHOW_ALL",
     transactions: [
       {
         date: 2017 - 12 - 1,
@@ -52,7 +40,6 @@ let initAccountData = [
     id: 3,
     name: "JULIA",
     balance: 100,
-    transactionsFilter: "SHOW_ALL",
     transactions: [
       {
         date: 2017 - 12 - 1,
@@ -64,7 +51,6 @@ let initAccountData = [
     id: 4,
     name: "SINBAD",
     balance: 100,
-    transactionsFilter: "SHOW_ALL",
     transactions: [
       {
         date: 2017 - 12 - 1,
@@ -81,8 +67,8 @@ const bankApp = combineReducers({
 });
 let initStore = {
   accounts: initAccountData,
-  transactionsDateFilter: "NEVER",
-  currentAccount: "BOB"
+  transactionsDateFilter: { start: "2014-01-01", end: "2015-01-01" },
+  currentAccount: 1
 };
 
 const store = createStore(bankApp, initStore);
@@ -94,7 +80,7 @@ const unsubscribe = store.subscribe(() => {
 
 store.dispatch(
   depositFunds({
-    id: 2,
+    id: 3,
     amount: 5000
   })
 );
@@ -123,7 +109,13 @@ store.dispatch(
     amount: 333
   })
 );
+store.dispatch(setCurrentAccount(4));
+store.dispatch(
+  setTransactionsDateFilter({ start: "2017-01-01", end: "2017-06-01" })
+);
+
+unsubscribe();
 
 // unsubscribe();
-ReactDOM.render(<App {...store.getState()} />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
 registerServiceWorker();

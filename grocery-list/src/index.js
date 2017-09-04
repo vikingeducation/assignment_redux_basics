@@ -58,7 +58,7 @@ const setSortBy = prop => {
   };
 };
 
-//reducers? state = {[]} ???? what is R store?
+//reducers
 function groceries(state = [], action) {
   switch (action.type) {
     case ADD_ITEM:
