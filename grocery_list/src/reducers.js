@@ -2,16 +2,21 @@ import { combineReducers } from "redux";
 
 //import action constants from action
 
-import { ADD_ITEM, PURCHASED, SET_FILTER, SORT } from "./actions";
+import { ADD_ITEM } from "./actions";
 
 //grocerylist reducers
 //
 //switch statement
-//case adding to list
-function list(data) {}
-//case set item as purchased
-//
-
+function groceryListReducer(state = [], action) {
+	switch (action.type) {
+		// adds item to list
+		case ADD_ITEM:
+			return [...state, action.data];
+		//set purchased to true for matched item
+		default:
+			return state;
+	}
+}
 //set filter reducers
 //
 //purchased
@@ -22,7 +27,12 @@ function list(data) {}
 //sortList reducers
 //
 
+//combine reducers
+export const groceriesApp = combineReducers({
+	groceryListReducer
+});
 //shape of grocery list object
+
 /*
 filters: {
   all: 'All',
