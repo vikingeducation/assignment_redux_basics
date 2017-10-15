@@ -1,8 +1,8 @@
 // create action constants to export
 export const ADD_ITEM = "ADD_ITEM";
 export const PURCHASED = "PURCHASED";
-export const FILTER = "SET_FILTER";
-export const SORT_BY_NAME = "SORT_BY_NAME";
+export const SET_FILTER = "SET_FILTER";
+export const SORT = "SORT";
 
 //to set id numbers for items on list
 let itemId = 1;
@@ -22,25 +22,15 @@ export function addItem(data) {
 	};
 }
 //  indicate that a item has been purchased
-export function purchased(id) {
+export function purchased() {
 	return {
 		type: PURCHASED,
-		data: id
-	};
-}
-//  sort by name
-export function sortByName() {
-	return {
-		type: SORT_BY_NAME
+		data: {}
 	};
 }
 //  filter purchased/ not purchased, all, categories
-export function filter(filter) {
-	return {
-		type: FILTER,
-		filter
-	};
-}
+//
+//  sort by name
 
 //shape of grocery list object
 /*
@@ -56,7 +46,6 @@ groceries_list: [
     description: diet,
     category: fruit,
     amount: 5,
-		status: unpurchased
   }
 ]
 */
