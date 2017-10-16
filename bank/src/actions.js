@@ -4,19 +4,35 @@ export const WITHDRAW = "WITHDRAW";
 export const TRANSFER = "TRANSFER";
 export const SELECT_ACCOUNT = "SELECT_ACCOUNT";
 export const ADD_ACCOUNT = "ADD_ACCOUNT ";
-
-let transactionNumber = 0;
+let accountNumber = 100;
+let transactionNumber = 1;
 export function addAccount(data) {
 	return {
 		type: ADD_ACCOUNT,
-		data: data
+		data: {
+			...data,
+			accountNumber: accountNumber++
+		}
 	};
 }
 
-export function deposit(amount) {
+export function selectAccount(accountNumber) {
+	return {
+		type: SELECT_ACCOUNT,
+		data: accountNumber
+	};
+}
+
+export function deposit(accountNumber, account, amount, date) {
 	return {
 		type: DEPOSIT,
-		data: amount
+		data: {
+			accountNumber,
+			transactionAccount: account,
+			transactionAmount: amount,
+			date,
+			transactionNumber: transactionNumber++
+		}
 	};
 }
 
@@ -24,7 +40,7 @@ export function deposit(amount) {
 //Account:
 //   checking: amount
 //   savings: amount
-//Transaction:
+//transaction:
 //          to:
 //          from:
 //          amount:
