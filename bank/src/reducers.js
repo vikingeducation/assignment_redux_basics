@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { DEPOSIT, ADD_ACCOUNT, SELECT_ACCOUNT } from "./actions";
+import { TRANSACTION, ADD_ACCOUNT, SELECT_ACCOUNT } from "./actions";
 
 function accounts(state = [], actions) {
 	switch (actions.type) {
@@ -14,7 +14,14 @@ function accounts(state = [], actions) {
 			);
 			return state;
 			break;
-		case DEPOSIT:
+		case TRANSACTION:
+			//sets amount to alter the account as positive or negative depending on type of transaction
+			actions.data.transactionAmount =
+				actions.data.type === "deposit"
+					? actions.data.transactionAmount
+					: actions.data.type === "withdrawal"
+						? actions.data.transactionAmount * -1
+						: actions.data.transactionAmount;
 			//gets account to deposit into
 			return state.map(item => {
 				if (item.accountNumber === actions.data.accountNumber) {
@@ -22,16 +29,15 @@ function accounts(state = [], actions) {
 						actions.data.transactionAccount === "checkings" ||
 						actions.data.transactionAccount === "savings"
 					) {
-						let test = actions.data.transactionAccount;
-						console.log("test", test);
-						console.log("amount", item[test]);
+						let account = actions.data.transactionAccount;
 						return {
 							...item,
-							[test]: item[test] + actions.data.transactionAmount,
+							[account]: item[account] + actions.data.transactionAmount,
 							transactions: [
 								...item.transactions,
 								{
 									transactionNumber: actions.data.transactionNumber,
+									type: actions.data.type,
 									date: actions.data.date,
 									account: actions.data.transactionAccount,
 									amount: actions.data.transactionAmount

@@ -1,5 +1,5 @@
 //constants
-export const DEPOSIT = "DEPOSIT";
+export const TRANSACTION = "TRANSACTION";
 export const WITHDRAW = "WITHDRAW";
 export const TRANSFER = "TRANSFER";
 export const SELECT_ACCOUNT = "SELECT_ACCOUNT";
@@ -23,11 +23,12 @@ export function selectAccount(accountNumber) {
 	};
 }
 
-export function deposit(accountNumber, account, amount, date) {
+export function transaction(type, accountNumber, account, amount, date) {
 	return {
-		type: DEPOSIT,
+		type: TRANSACTION,
 		data: {
 			accountNumber,
+			type,
 			transactionAccount: account,
 			transactionAmount: amount,
 			date,

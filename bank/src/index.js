@@ -6,7 +6,7 @@ import moment from "moment";
 
 import { createStore } from "redux";
 import { bankApp } from "./reducers";
-import { addAccount, selectAccount, deposit } from "./actions";
+import { addAccount, selectAccount, transaction } from "./actions";
 
 let date = moment().format("MMM Do YY h:mm");
 
@@ -38,16 +38,13 @@ store.dispatch(
 // Select and account to view
 
 store.dispatch(selectAccount(100));
-console.log("before deposit");
 // deposit into an account
-store.dispatch(deposit(100, "checkings", 500, date));
-console.log("TWO");
-store.dispatch(deposit(100, "checkings", 500, date));
-console.log("THREE");
-store.dispatch(deposit(101, "savings", 500, date));
-console.log("FOUR");
-store.dispatch(deposit(101, "checkings", 1000, date));
-// withdraw from an account
+store.dispatch(transaction("deposit", 100, "checkings", 500, date));
+// withdrawal from account
+store.dispatch(transaction("withdrawal", 100, "checkings", 1000, date));
+store.dispatch(transaction("deposit", 101, "savings", 500, date));
+store.dispatch(transaction("withdrawal", 101, "checkings", 500, date));
+
 // transfer money from / to accounts
 //
 // Filter by transaction date
