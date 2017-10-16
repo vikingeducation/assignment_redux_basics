@@ -1,6 +1,12 @@
 import { combineReducers } from "redux";
 
-import { TRANSACTION, ADD_ACCOUNT, SELECT_ACCOUNT } from "./actions";
+import {
+	ADD_ACCOUNT,
+	SELECT_ACCOUNT,
+	TRANSFER,
+	TRANSACTION,
+	FILTER_TRANSACTIONS
+} from "./actions";
 
 function accounts(state = [], actions) {
 	switch (actions.type) {
@@ -47,6 +53,55 @@ function accounts(state = [], actions) {
 					}
 				}
 				return item;
+			});
+
+			break;
+		/*
+				accountFrom: 100,
+				accountFromType: "checking",
+				accountTo: 101,
+				accountToTyop: "savings",
+				date: "Oct 16th 17 5:39"
+			*/
+		case TRANSFER:
+			let from = actions.data.accountFrom;
+			let to = actions.data.accountTo;
+			let fromType = actions.data.accountFromType;
+			let toType = actions.data.accountToType;
+			return state.map(account => {
+				if (account.accountNumber === from) {
+					return {
+						...account,
+						[fromType]: account[fromType] - actions.data.amount,
+						transactions: [
+							...account.transactions,
+							{
+								transactionNumber: actions.data.transactionNumber,
+								type: "withdrawal",
+								date: actions.data.date,
+								account: fromType,
+								amount: actions.data.amount
+							}
+						]
+					};
+				}
+				if (account.accountNumber === to) {
+					return {
+						...account,
+						[toType]: account[toType] + actions.data.amount,
+						transactions: [
+							...account.transactions,
+							{
+								transactionNumber: actions.data.transactionNumber,
+								type: "deposit",
+								date: actions.data.date,
+								account: toType,
+								amount: actions.data.amount
+							}
+						]
+					};
+				}
+				return account;
 			});
 
 			break;
