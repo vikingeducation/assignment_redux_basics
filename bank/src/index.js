@@ -14,10 +14,9 @@ import {
 	filterTransactions
 } from "./actions";
 
-let date = moment().format("MMM Do YY h:mm");
+let date = new Date();
 
 let store = createStore(bankApp);
-console.log(date);
 
 let unsubscribe = store.subscribe(() => {
 	console.log("Dispatch", store.getState());
@@ -64,6 +63,13 @@ store.dispatch(transfer(100, "checkings", 101, "savings", date, 500));
 console.log("transfer ben check to alex save: 1000");
 store.dispatch(transfer(101, "savings", 100, "checkings", date, 1000));
 // Filter by transaction date
-store.dispatch(filterTransactions());
+let dateFrom = new Date("01/12/2017").getTime();
+let dateTo = new Date().getTime();
+store.dispatch(filterTransactions(dateFrom, dateTo));
+//set filter again
+let dateFrom2 = new Date("02/12/2017").getTime();
+let dateTo2 = new Date("06/12/2017").getTime();
+store.dispatch(filterTransactions(dateFrom2, dateTo2));
+
 console.log("End State", store.getState());
 unsubscribe();

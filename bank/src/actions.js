@@ -32,6 +32,7 @@ export function transaction(type, accountNumber, account, amount, date) {
 			transactionAccount: account,
 			transactionAmount: amount,
 			date,
+			timeStamp: date.getTime(),
 			transactionNumber: transactionNumber++
 		}
 	};
@@ -47,21 +48,25 @@ export function transfer(
 	return {
 		type: TRANSFER,
 		data: {
-			accountFrom,
-			accountFromType,
-			accountTo,
-			accountToType,
-			date,
-			amount,
+			accountFrom, //account number of sender
+			accountFromType, //checkings or savings
+			accountTo, //account number of receiver
+			accountToType, //checking or savings
+			date, //date of transaction
+			timeStamp: date.getTime(), //used for filtering dates
+			amount, //amount sent
 			transactionNumber: transactionNumber++
 		}
 	};
 }
 
-export function filterTransactions(data) {
+export function filterTransactions(dateFrom, dateTo) {
 	return {
 		type: FILTER_TRANSACTIONS,
-		data
+		data: {
+			dateFrom: dateFrom, //getTime format
+			dateTo: dateTo //getTime format
+		}
 	};
 }
 //Name:

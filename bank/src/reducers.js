@@ -45,6 +45,7 @@ function accounts(state = [], actions) {
 									transactionNumber: actions.data.transactionNumber,
 									type: actions.data.type,
 									date: actions.data.date,
+									timeStamp: actions.data.timeStamp,
 									account: actions.data.transactionAccount,
 									amount: actions.data.transactionAmount
 								}
@@ -79,6 +80,7 @@ function accounts(state = [], actions) {
 								transactionNumber: actions.data.transactionNumber,
 								type: "withdrawal",
 								date: actions.data.date,
+								timeStamp: actions.data.timeStamp,
 								account: fromType,
 								amount: actions.data.amount
 							}
@@ -95,6 +97,7 @@ function accounts(state = [], actions) {
 								transactionNumber: actions.data.transactionNumber,
 								type: "deposit",
 								date: actions.data.date,
+								timeStamp: actions.data.timeStamp,
 								account: toType,
 								amount: actions.data.amount
 							}
@@ -110,6 +113,18 @@ function accounts(state = [], actions) {
 	}
 }
 
+function filters(state = {}, action) {
+	switch (action.type) {
+		case FILTER_TRANSACTIONS:
+			return {
+				from: action.data.dateFrom,
+				to: action.data.dateTo
+			};
+			break;
+		default:
+			return state;
+	}
+}
 //Name:
 //Account:
 //   checking: amount
@@ -123,5 +138,6 @@ function accounts(state = [], actions) {
 //
 
 export const bankApp = combineReducers({
-	accounts
+	accounts,
+	filters
 });
