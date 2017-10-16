@@ -24,13 +24,10 @@ function accounts(state = [], actions) {
 					) {
 						let test = actions.data.transactionAccount;
 						console.log("test", test);
-						console.log("amount", item.accounts[test]);
+						console.log("amount", item[test]);
 						return {
 							...item,
-							accounts: {
-								...item.account,
-								[test]: item.accounts[test] + actions.data.transactionAmount
-							},
+							[test]: item[test] + actions.data.transactionAmount,
 							transactions: [
 								...item.transactions,
 								{

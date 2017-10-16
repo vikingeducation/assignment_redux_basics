@@ -21,10 +21,8 @@ console.log("Initial State", store.getState());
 store.dispatch(
 	addAccount({
 		name: "Alex",
-		accounts: {
-			checkings: 1000,
-			savings: 10000
-		},
+		checkings: 1000,
+		savings: 10000,
 		transactions: []
 	})
 );
@@ -32,10 +30,8 @@ store.dispatch(
 store.dispatch(
 	addAccount({
 		name: "Ben",
-		accounts: {
-			checkings: 2000,
-			savings: 10000
-		},
+		checkings: 2000,
+		savings: 10000,
 		transactions: []
 	})
 );
