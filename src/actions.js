@@ -1,16 +1,17 @@
 // Set constants for action types
-export const CREATE_Grocery = "CREATE_Grocery";
-export const ADOPT_Grocery = "ADOPT_Grocery";
-export const UPDATE_Grocery = "UPDATE_Grocery";
-export const SET_AVAILABILITY_FILTER = "SET_AVAILABILITY_FILTER";
+export const ADD_GROCERY = 'ADD_GROCERY';
+export const PURCHASE_GROCERY = 'PURCHASE_GROCERY';
+export const UPDATE_GROCERY = 'UPDATE_GROCERY';
+export const SET_PURCHASED_FILTER = 'SET_PURCHASED_FILTER';
+export const SET_SORT_GROCERY = 'SET_SORT_GROCERY';
 
 // Action creators for each action
 
 // Set up an incrementing id for each Grocery
 let nextGroceryId = 1;
-export function createGrocery(data) {
+export function addGrocery(data) {
   return {
-    type: CREATE_Grocery,
+    type: ADD_GROCERY,
     data: {
       ...data,
       id: nextGroceryId++
@@ -20,28 +21,28 @@ export function createGrocery(data) {
 
 export function purchaseGrocery(id) {
   return {
-    type: ADOPT_Grocery,
+    type: PURCHASE_GROCERY,
     data: id
   };
 }
 
 export function updateGrocery(data) {
   return {
-    type: UPDATE_Grocery,
+    type: UPDATE_GROCERY,
     data
   };
 }
 
-export function setPurchaseFilter(data) {
+export function setPurchasedFilter(data) {
   return {
-    type: SET_AVAILABILITY_FILTER,
+    type: SET_PURCHASED_FILTER,
     data
   };
 }
 
-export function sortGrocery(data) {
+export function setSortGrocery(data) {
   return {
-    type: SET_AVAILABILITY_FILTER,
+    type: SET_SORT_GROCERY,
     data
   };
 }
