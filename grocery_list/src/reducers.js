@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 import {
   CREATE_ITEM,
@@ -6,8 +6,9 @@ import {
   UPDATE_ITEM,
   SHOW_ALL,
   SHOW_AVAILABLE,
-  SHOW_NOT_AVAILABLE
-} from './actions';
+  SHOW_NOT_AVAILABLE,
+  SORT_BY_NAME
+} from "./actions";
 
 function items(state = [], action) {
   switch (action.type) {
@@ -35,7 +36,7 @@ function items(state = [], action) {
   }
 }
 
-function itemFilters(state = '', action) {
+function itemFilters(state = "", action) {
   switch (action.type) {
     case SHOW_ALL:
       return action.data;
@@ -44,7 +45,15 @@ function itemFilters(state = '', action) {
         return item.available;
       });
     case SHOW_NOT_AVAILABLE:
-      return action.data;
+      return action.data.filter(item => {
+        return !item.available;
+      });
+    case SORT_BY_NAME:
+      return action.data.sort(function compare(a, b) {
+        if (a.name < b.name) return -1;
+        if (a.name > b.name) return 1;
+        return 0;
+      });
     default:
       return state;
   }
