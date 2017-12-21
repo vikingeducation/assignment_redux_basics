@@ -5,7 +5,8 @@ import {
   PURCHASE_GROCERY,
   UPDATE_GROCERY,
   SET_PURCHASED_FILTER,
-  SET_SORT_GROCERY
+  SET_SORT_GROCERY,
+  FILTER_GROCERY
 } from "./actions";
 
 function groceries(state = [], action) {
@@ -46,24 +47,21 @@ function groceries(state = [], action) {
               .sort(x(action.data.sortBy))
               .reverse()
           : state;
+    case FILTER_GROCERY:
+      return action.data.filter === "purchased"
+        ? state.filter(obj => obj.purchased)
+        : action.data.filter === "not purchased"
+          ? state.state.filter(obj => !obj.purchased)
+          : state;
     default:
       return state;
   }
 }
 
-function groceryFilters(state = "NOT_PURCHASED", action) {
+function groceryFilters(state = "SHOW_ALL", action) {
   switch (action.type) {
     case SET_PURCHASED_FILTER:
-      if (action.data.filter === "purchased") {
-        console.log("groceries");
-        console.log(groceries);
-        return {
-          groceryFilters: "PURCHASED",
-          groceries: groceries.filter(obj => obj.purchased)
-        };
-      } else {
-        return state.groceries.filter(obj => !obj.purchased);
-      }
+      return action.data;
     default:
       return state;
   }

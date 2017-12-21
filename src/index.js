@@ -12,7 +12,8 @@ import {
   purchaseGrocery,
   updateGrocery,
   setPurchasedFilter,
-  setSortGrocery
+  setSortGrocery,
+  filterGrocery
 } from "./actions";
 
 let store = createStore(groceryApp);
@@ -74,7 +75,9 @@ console.log("just changed price");
 
 store.dispatch(setSortGrocery({ sort: "asc", sortBy: "category" }));
 
-store.dispatch(setPurchasedFilter({ filter: "purchased" }));
+store.dispatch(setPurchasedFilter("PURCHASED"));
+
+store.dispatch(filterGrocery({ filter: "purchased" }));
 
 unsubscribe();
 
