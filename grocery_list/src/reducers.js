@@ -1,11 +1,11 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 import {
   CREATE_ITEM,
   PURCHASE_ITEM,
   UPDATE_ITEM,
   SET_AVAILABILITY_FILTER
-} from './actions';
+} from "./actions";
 
 function items(state = [], action) {
   switch (action.type) {
@@ -33,7 +33,7 @@ function items(state = [], action) {
   }
 }
 
-function itemFilters(state = 'SHOW_ALL', action) {
+function itemFilters(state = "SHOW_ALL", action) {
   switch (action.type) {
     case SET_AVAILABILITY_FILTER:
       return action.data;

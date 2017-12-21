@@ -1,7 +1,7 @@
-export const CREATE_ITEM = 'CREATE_ITEM';
-export const PURCHASE_ITEM = 'PURCHASE_ITEM';
-export const UPDATE_ITEM = 'UPDATE_ITEM';
-export const SET_AVAILABILITY_FILTER = 'SET_AVAILABILITY_FILTER';
+export const CREATE_ITEM = "CREATE_ITEM";
+export const PURCHASE_ITEM = "PURCHASE_ITEM";
+export const UPDATE_ITEM = "UPDATE_ITEM";
+export const SET_AVAILABILITY_FILTER = "SET_AVAILABILITY_FILTER";
 
 let nextItemId = 1;
 export function createItem(data) {
