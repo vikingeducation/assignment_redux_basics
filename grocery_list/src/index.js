@@ -11,7 +11,9 @@ import {
   createItem,
   purchaseItem,
   updateItem,
-  setAvailabilityFilter
+  showAll,
+  showAvailable,
+  showNotAvailable
 } from './actions.js';
 
 let store = createStore(itemsApp);
@@ -40,26 +42,34 @@ store.dispatch(
     description: 'lorem',
     amount: 1,
     category: 'Snacks',
-    available: false
+    available: true
   })
 );
 
-console.log('next state', store.getState());
+store.dispatch(purchaseItem(2));
 
-store.dispatch(purchaseItem(3));
+console.log('purchased Item', store.getState());
 
 store.dispatch(
   updateItem({
     id: 2,
     name: 'Cookies',
     amount: 3,
-    available: true
+    available: true,
+    category: 'Snacks',
+    description: 'ipsum'
   })
 );
 
-console.log('next state', store.getState());
+console.log('Updated Item#2', store.getState());
 
-store.dispatch(setAvailabilityFilter('SHOW_PURCHASED'));
+store.dispatch(showAll(store.getState().items));
+
+console.log('Show All', store.getState());
+
+store.dispatch(showAvailable(store.getState().items));
+
+console.log('Show Available', store.getState());
 
 unsubscribe();
 

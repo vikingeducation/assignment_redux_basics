@@ -4,7 +4,9 @@ import {
   CREATE_ITEM,
   PURCHASE_ITEM,
   UPDATE_ITEM,
-  SET_AVAILABILITY_FILTER
+  SHOW_ALL,
+  SHOW_AVAILABLE,
+  SHOW_NOT_AVAILABLE
 } from './actions';
 
 function items(state = [], action) {
@@ -33,9 +35,15 @@ function items(state = [], action) {
   }
 }
 
-function itemFilters(state = 'SHOW_ALL', action) {
+function itemFilters(state = '', action) {
   switch (action.type) {
-    case SET_AVAILABILITY_FILTER:
+    case SHOW_ALL:
+      return action.data;
+    case SHOW_AVAILABLE:
+      return action.data.filter(item => {
+        return item.available;
+      });
+    case SHOW_NOT_AVAILABLE:
       return action.data;
     default:
       return state;

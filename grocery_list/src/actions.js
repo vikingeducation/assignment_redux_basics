@@ -1,7 +1,9 @@
 export const CREATE_ITEM = 'CREATE_ITEM';
 export const PURCHASE_ITEM = 'PURCHASE_ITEM';
 export const UPDATE_ITEM = 'UPDATE_ITEM';
-export const SET_AVAILABILITY_FILTER = 'SET_AVAILABILITY_FILTER';
+export const SHOW_ALL = 'SHOW_ALL';
+export const SHOW_AVAILABLE = 'SHOW_AVAILABLE';
+export const SHOW_NOT_AVAILABLE = 'SHOW_NOT_AVAILABLE';
 
 let nextItemId = 1;
 export function createItem(data) {
@@ -28,9 +30,27 @@ export function updateItem(data) {
   };
 }
 
-export function setAvailabilityFilter(data) {
+//======================
+//FILTER
+//=====================
+
+export function showAll(data) {
   return {
-    type: SET_AVAILABILITY_FILTER,
+    type: SHOW_ALL,
+    data
+  };
+}
+
+export function showAvailable(data) {
+  return {
+    type: SHOW_AVAILABLE,
+    data
+  };
+}
+
+export function showNotAvailable(data) {
+  return {
+    type: SHOW_NOT_AVAILABLE,
     data
   };
 }
