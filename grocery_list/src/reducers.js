@@ -50,13 +50,13 @@ function itemFilters(state = '', action) {
         return !item.available;
       });
     case SORT_BY_NAME:
-      return action.data.sort(function compare(a, b) {
+      return action.data.slice(0).sort(function compare(a, b) {
         if (a.name < b.name) return -1;
         if (a.name > b.name) return 1;
         return 0;
       });
     case SORT_BY_DESCRIPTION:
-      return action.data.sort(function compare(a, b) {
+      return action.data.slice(0).sort(function compare(a, b) {
         if (a.description < b.description) return -1;
         if (a.description > b.description) return 1;
         return 0;
