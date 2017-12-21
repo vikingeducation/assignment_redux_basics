@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 import {
   ADD_GROCERY,
@@ -6,7 +6,7 @@ import {
   UPDATE_GROCERY,
   SET_PURCHASED_FILTER,
   SET_SORT_GROCERY
-} from './actions';
+} from "./actions";
 
 function groceries(state = [], action) {
   switch (action.type) {
@@ -38,9 +38,9 @@ function groceries(state = [], action) {
         return 0;
       };
 
-      return action.data.sort === 'asc'
+      return action.data.sort === "asc"
         ? state.slice(0).sort(x(action.data.sortBy))
-        : action.data.sort === 'desc'
+        : action.data.sort === "desc"
           ? state
               .slice(0)
               .sort(x(action.data.sortBy))
@@ -51,10 +51,19 @@ function groceries(state = [], action) {
   }
 }
 
-function groceryFilters(state = 'NOT_PURCHASED', action) {
+function groceryFilters(state = "NOT_PURCHASED", action) {
   switch (action.type) {
     case SET_PURCHASED_FILTER:
-      return action.data;
+      if (action.data.filter === "purchased") {
+        console.log("groceries");
+        console.log(groceries);
+        return {
+          groceryFilters: "PURCHASED",
+          groceries: groceries.filter(obj => obj.purchased)
+        };
+      } else {
+        return state.groceries.filter(obj => !obj.purchased);
+      }
     default:
       return state;
   }
