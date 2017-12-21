@@ -1,37 +1,64 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import registerServiceWorker from "./registerServiceWorker";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
 
-import { createStore } from "redux";
+import { createStore } from 'redux';
 
-import { itemsApp } from "./reducers";
+import { itemsApp } from './reducers';
 
-import { createItem } from "./actions.js";
+import {
+  createItem,
+  purchaseItem,
+  updateItem,
+  setAvailabilityFilter
+} from './actions.js';
 
 let store = createStore(itemsApp);
 
-console.log("initial state", store.getState());
+let unsubscribe = store.subscribe(() => {
+  console.log('unsubscribe', store.getState());
+});
 
-// Dispatch our actions
+console.log('initial state', store.getState());
+
 store.dispatch(
-  createItems({
-    name: "Milk",
-    description: "whole milk"
+  createItem({
+    name: 'Milk',
+    description: 'whole milk',
     amount: 15,
-    category: "Diary",
+    category: 'Diary',
     available: true
   })
 );
 
-// Set up the listener. The subscribe method returns a
-// function to unregister the listener so set it equal
-// to a variable for later use.
-let unsubscribe = store.subscribe(() => {
-  // Log the new state to the console
-  console.log(store.getState());
-});
+console.log('next state', store.getState());
 
-ReactDOM.render(<App />, document.getElementById("root"));
-registerServiceWorker();
+store.dispatch(
+  createItem({
+    name: 'Cookies',
+    description: 'lorem',
+    amount: 1,
+    category: 'Snacks',
+    available: false
+  })
+);
+
+store.dispatch(purchaseItem(3));
+
+store.dispatch(
+  updateItem({
+    id: 2,
+    name: 'Cookies',
+    amount: 3,
+    available: true
+  })
+);
+
+console.log('next state', store.getState());
+
+store.dispatch(setAvailabilityFilter('SHOW_PURCHASED'));
+
+unsubscribe();
+
+ReactDOM.render(<App />, document.getElementById('root'));
