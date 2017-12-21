@@ -44,6 +44,8 @@ store.dispatch(
   })
 );
 
+console.log('next state', store.getState());
+
 store.dispatch(purchaseItem(3));
 
 store.dispatch(
