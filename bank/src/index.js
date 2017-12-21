@@ -7,7 +7,13 @@ import { createStore } from "redux";
 
 import { accountsApp } from "./reducers";
 
-import { createAccount, viewAccount, depositAccount } from "./actions.js";
+import {
+  createAccount,
+  viewAccount,
+  depositAccount,
+  withdrawAccount,
+  transferAccount
+} from "./actions.js";
 
 let store = createStore(accountsApp);
 
@@ -21,7 +27,7 @@ store.dispatch(
   createAccount({
     name: "Edwin",
     amount: 15,
-    date: new Date("2017-01-26")
+    date: Date.now()
   })
 );
 
@@ -29,7 +35,7 @@ store.dispatch(
   createAccount({
     name: "Eddie",
     amount: 100,
-    date: new Date("2017-01-27")
+    date: Date.now()
   })
 );
 
@@ -43,11 +49,36 @@ store.dispatch(
   depositAccount({
     id: 1,
     amount: 1000,
-    date: new Date("2017-01-27")
+    date: Date.now()
   })
 );
 
 console.log("Deposited $1000", store.getState());
+
+store.dispatch(
+  withdrawAccount({
+    id: 1,
+    amount: 500,
+    date: Date.now()
+  })
+);
+
+console.log("Withdraw $500", store.getState());
+
+store.dispatch(
+  transferAccount({
+    withdrawId: 2,
+    depositId: 1,
+    amount: 500,
+    date: Date.now()
+  })
+);
+
+console.log("Transfer from Eddie to Edwin $500", store.getState());
+
+store.dispatch(viewAccount(2));
+
+console.log("view Eddie 1", store.getState());
 
 unsubscribe();
 

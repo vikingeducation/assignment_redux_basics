@@ -1,6 +1,8 @@
 export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
 export const VIEW_ACCOUNT = "VIEW_ACCOUNT";
-export const DEPOSIT_ACCOUNT = "VIEW_ACCOUNT";
+export const DEPOSIT_ACCOUNT = "DEPOSIT_ACCOUNT";
+export const WITHDRAW_ACCOUNT = "WITHDRAW_ACCOUNT";
+export const TRANSFER_ACCOUNT = "TRANSFER_ACCOUNT";
 
 let nextAccountId = 1;
 export function createAccount(data) {
@@ -23,6 +25,20 @@ export function viewAccount(id) {
 export function depositAccount(data) {
   return {
     type: DEPOSIT_ACCOUNT,
+    data
+  };
+}
+
+export function withdrawAccount(data) {
+  return {
+    type: WITHDRAW_ACCOUNT,
+    data
+  };
+}
+
+export function transferAccount(data) {
+  return {
+    type: TRANSFER_ACCOUNT,
     data
   };
 }
