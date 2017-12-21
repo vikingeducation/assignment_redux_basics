@@ -1,9 +1,9 @@
 // Set constants for action types
-export const ADD_GROCERY = 'ADD_GROCERY';
-export const PURCHASE_GROCERY = 'PURCHASE_GROCERY';
-export const UPDATE_GROCERY = 'UPDATE_GROCERY';
-export const SET_PURCHASED_FILTER = 'SET_PURCHASED_FILTER';
-export const SET_SORT_GROCERY = 'SET_SORT_GROCERY';
+export const ADD_GROCERY = "ADD_GROCERY";
+export const PURCHASE_GROCERY = "PURCHASE_GROCERY";
+export const UPDATE_GROCERY = "UPDATE_GROCERY";
+export const SET_PURCHASED_FILTER = "SET_PURCHASED_FILTER";
+export const SET_SORT_GROCERY = "SET_SORT_GROCERY";
 
 // Action creators for each action
 
