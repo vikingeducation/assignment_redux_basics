@@ -1,9 +1,8 @@
 export const ADD_GROCERY_ITEM = 'ADD_GROCERY_ITEM'
-export const SHOW_PURCHASED_FILTER = 'SHOW_PURCHASED_FILTER'
-export const SHOW_UNPURCHASED_FILTER = 'SHOW_UNPURCHASED_FILTER'
-export const SHOW_ALL_CATEGORIES_FILTER = 'SHOW_ALL_CATEGORIES_FILTER'
-export const SORT_BY_NAME = 'SORT_BY_NAME'
-export const SORT_BY_DESCRIPTION = 'SORT_BY_DESCRIPTION'
+export const PURCHASE_ITEM = 'PURCHASE_ITEM'
+export const SET_PURCHASED_FILTER = 'SET_PURCHASED_FILTER'
+export const SET_CATEGORIES_FILTER = 'SET_CATEGORIES_FILTER'
+export const SORT_BY_TYPE = 'SORT_BY_TYPE'
 
 let listId = 1
 export function addGroceryItem(data) {
@@ -16,37 +15,30 @@ export function addGroceryItem(data) {
   }
 }
 
-export function showPurchasedFilter(data) {
+export function purchaseItem(data) {
   return {
-    type: SHOW_PURCHASED_FILTER,
+    type: PURCHASE_ITEM,
     data
   }
 }
 
-export function showNotPurchasedFilter(data) {
+export function setPurchasedFilter(data) {
   return {
-    type: SHOW_UNPURCHASED_FILTER,
+    type: SET_PURCHASED_FILTER,
     data
   }
 }
 
-export function showAllCategoriesFilter(data) {
+export function setCategoriesFilter(data) {
   return {
-    type: SHOW_ALL_CATEGORIES_FILTER,
+    type: SET_CATEGORIES_FILTER,
     data
   }
 }
 
-export function sortByDescription(data) {
+export function setSorting(data) {
   return {
-    type: SORT_BY_DESCRIPTION,
-    data
-  }
-}
-
-export function sortByName(data) {
-  return {
-    type: SORT_BY_NAME,
+    type: SORT_BY_TYPE,
     data
   }
 }
