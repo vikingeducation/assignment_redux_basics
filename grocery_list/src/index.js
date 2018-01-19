@@ -12,14 +12,6 @@ import {addGroceryItem,
         setCategoriesFilter,
         setSorting} from './actions'
 
-
-// As a user, I want to...
-//
-// Add a new item to my grocery list. The item should have a name/description and optional fields for amount and category.
-// Indicate an item has been purchased.
-// Set filters for purchased/not purchased/all, categories/all.
-// Set sort by name/description.
-
 let store = createStore(groceryApp)
 
 let unsubscribe = store.subscribe(() => {

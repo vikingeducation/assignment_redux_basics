@@ -1,11 +1,23 @@
 # The Grocery List React REDUX App
-TBC...
+Redux operation UX oriented;
+"As a user, I want to...
+
+Add a new item to my grocery list. The item should have a name/description and optional fields for amount and category.
+Indicate an item has been purchased.
+Set filters for purchased/not purchased/all, categories/all.
+Set sort by name/description."
 
 
 
 # The Bank React REDUX App
 
-TBC...
+"As a bank employee, I want to...
+
+Select an account to view.
+Deposit money into an account.
+Withdraw money from an account.
+Transfer money between accounts.
+Filter transactions by date (using a start and end date) for an account."
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
