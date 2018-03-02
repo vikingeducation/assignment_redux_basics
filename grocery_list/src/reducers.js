@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import {
-ADD_ITEM, SET_CATEGORY_FILTER,
-SET_PURCHASE_FILTER
+  ADD_ITEM, PURCHASE_ITEM, SET_CATEGORY_FILTER,
+  SET_PURCHASE_FILTER, SET_SORT
 } from "./actions";
 
 
@@ -12,6 +12,18 @@ function groceryList(state = [], action) {
         ...state,
         action.payload,
       ];
+    case PURCHASE_ITEM:
+      return state.map(item => {
+        if (item.id === action.payload) {
+          return {
+            ...item,
+            purchased: true,
+
+          };
+        }
+        return item;
+      });
+
     default:
       return state
   }
@@ -35,8 +47,18 @@ function setPurchaseFilter(state = 'SHOW_ALL', action) {
   }
 }
 
+function setSortBy(state = 'NAME', action) {
+  switch (action.type) {
+    case SET_SORT:
+      return action.payload;
+    default:
+      return state
+  }
+}
+
 export const groceryListApp = combineReducers({
   groceryList,
   setCategoryFilter,
   setPurchaseFilter,
+  setSortBy,
 });
