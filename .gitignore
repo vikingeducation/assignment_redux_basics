@@ -1,0 +1,5 @@
+# Master .gitignore for two projects
+# ignore IntelliJ
+grocery_list/.idea/
+the_bank/.idea/
+
