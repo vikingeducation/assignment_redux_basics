@@ -1,16 +1,6 @@
-// account
-// const account = {
-//   type: CREATE_ACCOUNT,
-//   payload: {
-//     id: 1,
-//     owner: 'Joe Seephus',
-//     balance: 0,
-//     transactions: [],
-//   }
-// }
-
 export const CREATE_ACCOUNT = 'CREATE_ACCOUNT';
-export const FIND_ACCOUNT = 'FIND_ACCOUNT';
+export const FIND_ACCOUNT_BY_ID = 'FIND_ACCOUNT_BY_ID';
+
 
 let nextAccountId = 1;
 export function createAccount(payload) {
@@ -24,9 +14,9 @@ export function createAccount(payload) {
   }
 }
 
-export function findAccount(id) {
+export function findAccountById(id) {
   return {
-    type: FIND_ACCOUNT,
+    type: FIND_ACCOUNT_BY_ID,
     payload: id,
   }
 }
